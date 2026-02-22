@@ -142,6 +142,35 @@ export default function Home() {
               <p className="font-display text-[clamp(16px,2.5vw,22px)] text-white uppercase tracking-[0.05em] mb-6">
                 Be first to know when we launch
               </p>
+              {/* Handwritten nudge with curved arrow */}
+              <div className="relative mb-2">
+                <p className="font-accent text-[clamp(16px,2.5vw,20px)] text-white/80 -rotate-2 text-center">
+                  No spam. Just SPF.
+                </p>
+                <svg
+                  className="absolute left-1/2 top-full w-[80px] h-[40px] ml-[40px] sm:ml-[60px]"
+                  viewBox="0 0 80 40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M5 2 C30 5, 60 10, 70 30"
+                    stroke="rgba(255,255,255,0.6)"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    fill="none"
+                  />
+                  <path
+                    d="M64 24 L70 30 L62 30"
+                    stroke="rgba(255,255,255,0.6)"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                  />
+                </svg>
+              </div>
+              <div className="h-[36px]" />
               <form
                 onSubmit={handleHeroSubmit}
                 className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
