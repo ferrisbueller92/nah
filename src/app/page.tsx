@@ -59,9 +59,12 @@ export default function Home() {
           {/* Accent bar */}
           <div className="w-[60px] h-[4px] bg-contrast mx-auto mb-10 animate-fade-in-up delay-200" />
 
-          {/* Subtitle */}
+          {/* Subtitle — acronym reveal */}
           <p className="font-body text-[14px] md:text-[16px] text-white/70 uppercase tracking-[0.15em] mb-12 animate-fade-in-up delay-200">
-            Automated sunscreen for Australian beaches
+            <span className="text-white font-bold">N</span>eed{" "}
+            <span className="text-white font-bold">A</span>{" "}
+            <span className="text-white font-bold">H</span>and?{" "}
+            <span className="mx-2">&mdash;</span> Automated sunscreen for Australian beaches
           </p>
 
           {/* Waitlist CTA */}
@@ -454,7 +457,10 @@ export default function Home() {
             NAH<span className="text-accent">.</span>
           </div>
           <p className="font-body text-sm text-neutral-500 mb-1">
-            Automated sunscreen for Australian beaches.
+            <span className="text-accent font-bold">N</span>eed{" "}
+            <span className="text-accent font-bold">A</span>{" "}
+            <span className="text-accent font-bold">H</span>and?{" "}
+            &mdash; That&apos;s what we&apos;re here for.
           </p>
           <p className="font-data text-[11px] text-neutral-700 uppercase tracking-[0.1em] mb-6">
             SPF 50+ &bull; TGA Compliant &bull; $5 per spray &bull; Coming to Bondi
