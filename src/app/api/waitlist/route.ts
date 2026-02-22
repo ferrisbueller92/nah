@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
   try {
-    const { email } = await request.json();
+    const { email, beach } = await request.json();
 
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return NextResponse.json({ error: "Valid email required." }, { status: 400 });
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
 
     if (!apiKey || !listId) {
       // Fallback: log to console when Klaviyo isn't configured yet
-      console.log(`[WAITLIST] ${email} — ${new Date().toISOString()}`);
+      console.log(`[WAITLIST] ${email} (${beach || "no beach"}) — ${new Date().toISOString()}`);
       return NextResponse.json({ success: true, message: "Signed up (dev mode)" });
     }
 
@@ -33,6 +33,7 @@ export async function POST(request: Request) {
             properties: {
               source: "nah-landing-page",
               signup_date: new Date().toISOString(),
+              ...(beach && { beach }),
             },
           },
         },
@@ -42,11 +43,32 @@ export async function POST(request: Request) {
     let profileId: string;
 
     if (profileRes.status === 409) {
-      // Profile already exists — extract ID from the duplicate response
+      // Profile already exists — extract ID and update with beach
       const dupData = await profileRes.json();
       profileId = dupData.errors?.[0]?.meta?.duplicate_profile_id;
       if (!profileId) {
         return NextResponse.json({ success: true, message: "Already signed up" });
+      }
+
+      // Update existing profile with beach selection
+      if (beach) {
+        await fetch(`https://a.klaviyo.com/api/profiles/${profileId}/`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Klaviyo-API-Key ${apiKey}`,
+            revision: "2024-10-15",
+          },
+          body: JSON.stringify({
+            data: {
+              type: "profile",
+              id: profileId,
+              attributes: {
+                properties: { beach },
+              },
+            },
+          }),
+        });
       }
     } else if (profileRes.ok) {
       const profileData = await profileRes.json();
