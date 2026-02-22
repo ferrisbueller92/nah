@@ -121,17 +121,17 @@ export default function Home() {
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto py-20">
           {/* Brand wordmark */}
-          <h1 className="font-display text-[clamp(80px,15vw,160px)] text-white uppercase leading-[0.85] tracking-[0.02em] mb-6 animate-fade-in-up">
+          <h1 className="font-display text-[clamp(80px,15vw,160px)] text-white uppercase leading-[0.85] tracking-[0.02em] mb-10 animate-fade-in-up">
             NAH<span className="text-contrast">.</span>
           </h1>
 
           {/* Tagline */}
-          <p className="font-accent text-[clamp(24px,5vw,44px)] text-white leading-[1.1] mb-6 animate-fade-in-up delay-100">
+          <p className="font-accent text-[clamp(24px,5vw,44px)] text-white leading-[1.1] mb-10 animate-fade-in-up delay-100">
             Mate, you&apos;re cooked.
           </p>
 
           {/* Accent bar */}
-          <div className="w-[60px] h-[4px] bg-contrast mx-auto mb-10 animate-fade-in-up delay-200" />
+          <div className="w-[60px] h-[4px] bg-contrast mx-auto mb-14 animate-fade-in-up delay-200" />
 
           {/* Acronym reveal */}
           <p className="font-body text-[14px] md:text-[16px] text-white/70 uppercase tracking-[0.15em] mb-6 animate-fade-in-up delay-200">
