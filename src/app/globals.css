@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;600;700&family=Permanent+Marker&family=Space+Mono:wght@400;700&display=swap');
+@import "tailwindcss";
+
+/* ── NAH Design Tokens v1.1 ── */
+
+:root {
+  /* Primary */
+  --colour-base: #FFF8F0;
+  --colour-contrast: #1A1A1A;
+  --colour-accent: #FE8510;
+  --colour-accent-hover: #F47800;
+  --colour-accent-active: #E06D00;
+
+  /* Neutral */
+  --neutral-50: #FFF8F0;
+  --neutral-100: #FFF2E6;
+  --neutral-200: #FFE8D4;
+  --neutral-300: #E8D5C0;
+  --neutral-400: #C4B5A3;
+  --neutral-500: #9B8F82;
+  --neutral-600: #776D63;
+  --neutral-700: #544B43;
+  --neutral-800: #332C26;
+  --neutral-900: #1A1A1A;
+
+  /* Semantic */
+  --colour-success: #2D9D5A;
+  --colour-warning: #FFB800;
+  --colour-error: #D92B2B;
+  --colour-info: #0080FF;
+
+  /* Secondary */
+  --colour-lobster: #FF6B6B;
+  --colour-uv-violet: #7B68EE;
+  --colour-zinc-white: #F5F5E8;
+  --colour-midnight: #0D1B2A;
+
+  /* Gradients */
+  --gradient-sunburst: linear-gradient(135deg, #F6C47D 0%, #FEA609 30%, #FE8510 65%, #F47800 100%);
+  --gradient-sunburst-subtle: linear-gradient(135deg, #FFF8F0 0%, #FFE8D4 40%, #F6C47D 100%);
+  --gradient-scorcher: linear-gradient(135deg, #FF6B6B 0%, #FE8510 50%, #FEA609 100%);
+}
+
+@theme inline {
+  --color-base: var(--colour-base);
+  --color-contrast: var(--colour-contrast);
+  --color-accent: var(--colour-accent);
+  --color-accent-hover: var(--colour-accent-hover);
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-300: var(--neutral-300);
+  --color-neutral-400: var(--neutral-400);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-600: var(--neutral-600);
+  --color-neutral-700: var(--neutral-700);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+  --color-success: var(--colour-success);
+  --color-warning: var(--colour-warning);
+  --color-error: var(--colour-error);
+  --color-info: var(--colour-info);
+  --color-lobster: var(--colour-lobster);
+  --color-midnight: var(--colour-midnight);
+
+  --font-display: 'Anton', 'Bebas Neue', 'Oswald', sans-serif;
+  --font-body: 'DM Sans', 'Inter', 'Helvetica Neue', sans-serif;
+  --font-accent: 'Permanent Marker', 'Covered By Your Grace', cursive;
+  --font-data: 'Space Mono', 'JetBrains Mono', monospace;
+}
+
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--colour-contrast);
+  background: var(--colour-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Utility classes for tokens ── */
+.gradient-sunburst { background: var(--gradient-sunburst); }
+.gradient-sunburst-subtle { background: var(--gradient-sunburst-subtle); }
+.gradient-scorcher { background: var(--gradient-scorcher); }
+
+/* ── Animations ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.45s cubic-bezier(0.25, 0.1, 0.25, 1.0) both;
+}
+
+.animate-count-up {
+  animation: countUp 0.3s cubic-bezier(0.25, 0.1, 0.25, 1.0) both;
+}
+
+/* Staggered delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-in-up,
+  .animate-count-up {
+    animation: none;
+  }
+}

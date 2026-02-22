@@ -1,0 +1,444 @@
+"use client";
+
+import { useState } from "react";
+
+export default function Home() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email) return;
+    setStatus("loading");
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (res.ok) {
+        setStatus("success");
+        setEmail("");
+      } else {
+        const data = await res.json();
+        setErrorMsg(data.error || "Something went wrong.");
+        setStatus("error");
+      }
+    } catch {
+      setErrorMsg("Connection failed. Try again.");
+      setStatus("error");
+    }
+  }
+
+  return (
+    <main>
+      {/* ═══════ HERO ═══════ */}
+      <section className="gradient-sunburst relative overflow-hidden min-h-[90vh] flex items-center justify-center">
+        {/* Background watermark */}
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
+          aria-hidden="true"
+        >
+          <span className="font-display text-[clamp(200px,30vw,400px)] uppercase text-white/[0.08] leading-none">
+            NAH.
+          </span>
+        </div>
+
+        <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+          <p className="font-data text-[13px] text-white/80 uppercase tracking-[0.15em] mb-6 animate-fade-in-up">
+            2 in 3 Australians will get skin cancer
+          </p>
+          <h1 className="font-accent text-[clamp(40px,8vw,72px)] text-white leading-[0.95] mb-4 animate-fade-in-up delay-100">
+            Mate, you&apos;re cooked.
+          </h1>
+          <p className="font-body text-lg md:text-xl text-white/85 mb-10 max-w-xl mx-auto animate-fade-in-up delay-200">
+            Australia&apos;s first automated sunscreen booth. Full body SPF 50+ in 10
+            seconds. $4. No excuses.
+          </p>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto animate-fade-in-up delay-300"
+          >
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (status === "error") setStatus("idle");
+              }}
+              placeholder="your@email.com"
+              required
+              className="flex-1 px-5 py-3.5 bg-white/15 text-white placeholder-white/50 font-body text-[15px] border-2 border-white/30 outline-none focus:border-white transition-colors"
+              disabled={status === "loading" || status === "success"}
+            />
+            <button
+              type="submit"
+              disabled={status === "loading" || status === "success"}
+              className="px-8 py-3.5 bg-contrast text-white font-body font-bold text-[15px] uppercase tracking-[0.08em] hover:bg-neutral-800 transition-colors disabled:opacity-50"
+            >
+              {status === "loading"
+                ? "..."
+                : status === "success"
+                ? "YOU'RE IN"
+                : "JOIN THE WAITLIST"}
+            </button>
+          </form>
+          {status === "success" && (
+            <p className="text-white/90 text-sm mt-3 font-body animate-fade-in-up">
+              Legend. We&apos;ll let you know when we launch.
+            </p>
+          )}
+          {status === "error" && (
+            <p className="text-white text-sm mt-3 font-body">{errorMsg}</p>
+          )}
+          <p className="font-data text-[11px] text-white/40 mt-6 uppercase tracking-[0.1em] animate-fade-in-up delay-400">
+            Coming to Bondi &bull; Summer 2026
+          </p>
+        </div>
+      </section>
+
+      {/* ═══════ STATS BAR ═══════ */}
+      <section className="bg-contrast">
+        <div className="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4">
+          <div className="p-8 md:p-12 text-center border-r border-b md:border-b-0 border-neutral-800">
+            <div className="font-display text-[clamp(36px,5vw,48px)] text-error uppercase leading-none mb-2">
+              2 in 3
+            </div>
+            <div className="font-body text-sm text-neutral-500">
+              Will get skin cancer
+            </div>
+          </div>
+          <div className="p-8 md:p-12 text-center border-b md:border-b-0 md:border-r border-neutral-800">
+            <div className="font-display text-[clamp(36px,5vw,48px)] text-accent uppercase leading-none mb-2">
+              10 sec
+            </div>
+            <div className="font-body text-sm text-neutral-500">
+              Full body coverage
+            </div>
+          </div>
+          <div className="p-8 md:p-12 text-center border-r border-neutral-800">
+            <div className="font-display text-[clamp(36px,5vw,48px)] text-accent uppercase leading-none mb-2">
+              $4
+            </div>
+            <div className="font-body text-sm text-neutral-500">
+              Less than a coffee
+            </div>
+          </div>
+          <div className="p-8 md:p-12 text-center">
+            <div className="font-display text-[clamp(36px,5vw,48px)] text-success uppercase leading-none mb-2">
+              90%
+            </div>
+            <div className="font-body text-sm text-neutral-500">
+              Would use it
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ HOW IT WORKS ═══════ */}
+      <section className="bg-base py-20 md:py-28">
+        <div className="max-w-[1200px] mx-auto px-6">
+          <p className="font-body text-[13px] font-bold text-accent uppercase tracking-[0.15em] mb-3">
+            How it works
+          </p>
+          <h2 className="font-display text-[clamp(32px,5vw,48px)] uppercase leading-[1.05] mb-4">
+            Three steps. Ten seconds.
+          </h2>
+          <p className="font-body text-lg text-neutral-600 max-w-[55ch] mb-16">
+            We didn&apos;t over-engineer this. Walk in, get sprayed, walk out.
+            Your back will thank you.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-0">
+            <div className="p-8 md:p-10 border border-neutral-200 border-b-0 md:border-b md:border-r-0">
+              <div className="font-display text-[56px] text-accent leading-none mb-4">
+                01
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                Walk In
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                Step into the booth on the beach. No booking. No app. No
+                account. Just walk in.
+              </p>
+            </div>
+            <div className="p-8 md:p-10 border border-neutral-200 border-b-0 md:border-b md:border-r-0">
+              <div className="font-display text-[56px] text-accent leading-none mb-4">
+                02
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                Get Sprayed
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                16 nozzles. 360&deg; coverage. SPF 50+ TGA-compliant
+                sunscreen. Head to toe in 10 seconds flat.
+              </p>
+            </div>
+            <div className="p-8 md:p-10 border border-neutral-200">
+              <div className="font-display text-[56px] text-accent leading-none mb-4">
+                03
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                Walk Out
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                Tap $4 on the card reader. Done. Go enjoy the beach. No missed
+                spots. No sticky hands. You&apos;re welcome.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ WARNING LABEL ═══════ */}
+      <section className="bg-contrast py-20 md:py-28">
+        <div className="max-w-[720px] mx-auto px-6">
+          <div className="border-2 border-accent p-8 md:p-12 relative">
+            <span className="absolute -top-3 left-6 bg-contrast px-3 font-display text-[14px] text-accent uppercase tracking-[0.15em]">
+              Warning
+            </span>
+            <p className="font-accent text-[clamp(18px,3vw,24px)] text-base/90 leading-relaxed mb-6">
+              Not using sunscreen may result in looking like a lobster, feeling
+              like an idiot, and potentially contributing to Australia&apos;s
+              world-leading melanoma statistics.
+            </p>
+            <p className="font-accent text-[clamp(18px,3vw,24px)] text-accent leading-relaxed">
+              But sure, you&apos;ll be fine.
+            </p>
+          </div>
+
+          <div className="mt-16 text-center">
+            <div className="font-display text-[clamp(56px,10vw,96px)] text-error uppercase leading-none mb-2">
+              #1
+            </div>
+            <p className="font-body text-lg text-neutral-400">
+              Australia has the highest rate of skin cancer in the world.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ WHY NAH ═══════ */}
+      <section className="bg-base py-20 md:py-28">
+        <div className="max-w-[1200px] mx-auto px-6">
+          <p className="font-body text-[13px] font-bold text-accent uppercase tracking-[0.15em] mb-3">
+            Why NAH
+          </p>
+          <h2 className="font-display text-[clamp(32px,5vw,48px)] uppercase leading-[1.05] mb-16">
+            Because your excuses ran out.
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
+              <div className="font-body text-[12px] font-bold text-neutral-500 uppercase tracking-[0.12em] mb-2">
+                Zero Missed Spots
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                360&deg; coverage
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                16 nozzles spray every angle. UV dye testing shows 100% body
+                coverage vs ~60% with manual application. Your back, your ears,
+                the tops of your feet — all covered.
+              </p>
+            </div>
+            <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
+              <div className="font-body text-[12px] font-bold text-neutral-500 uppercase tracking-[0.12em] mb-2">
+                Proper Protection
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                SPF 50+ TGA-Listed
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                Same active ingredients as the stuff at Priceline. TGA-listed,
+                broad spectrum, made by an Australian contract lab. Not some
+                dodgy spray — proper sunscreen.
+              </p>
+            </div>
+            <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
+              <div className="font-body text-[12px] font-bold text-neutral-500 uppercase tracking-[0.12em] mb-2">
+                Cheaper Than a Coffee
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                $4 flat
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                A bottle of sunscreen costs $15-30 and won&apos;t cover you properly.
+                Skin cancer treatment costs ~$50K. $4 for full body coverage is a
+                no-brainer.
+              </p>
+            </div>
+            <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
+              <div className="font-body text-[12px] font-bold text-neutral-500 uppercase tracking-[0.12em] mb-2">
+                No Excuses Left
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                Right there. On the beach.
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                It&apos;s on the beach. It takes 10 seconds. It costs $4. You
+                don&apos;t need an app or an account. Every barrier to wearing
+                sunscreen — gone.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ FAQ ═══════ */}
+      <section className="gradient-sunburst-subtle py-20 md:py-28">
+        <div className="max-w-[720px] mx-auto px-6">
+          <p className="font-body text-[13px] font-bold text-accent uppercase tracking-[0.15em] mb-3">
+            FAQ
+          </p>
+          <h2 className="font-display text-[clamp(32px,5vw,48px)] uppercase leading-[1.05] mb-12">
+            Yeah, we get asked this a lot.
+          </h2>
+
+          <div className="space-y-6">
+            <details className="group bg-white border border-neutral-200 open:border-accent">
+              <summary className="cursor-pointer px-6 py-5 font-body font-bold text-[16px] flex justify-between items-center">
+                How does it work?
+                <span className="text-accent text-xl group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
+                Walk into the booth. Press start. 16 nozzles spray you head-to-toe
+                with SPF 50+ sunscreen in 10 seconds. Tap $4 on the card reader.
+                Walk out. That&apos;s literally it. We didn&apos;t over-engineer this.
+              </div>
+            </details>
+
+            <details className="group bg-white border border-neutral-200 open:border-accent">
+              <summary className="cursor-pointer px-6 py-5 font-body font-bold text-[16px] flex justify-between items-center">
+                Is the sunscreen safe?
+                <span className="text-accent text-xl group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
+                SPF 50+, TGA-listed, broad-spectrum sunscreen made by an Australian
+                contract lab. Same active ingredients as the stuff the Cancer Council
+                sells. We just spray it better.
+              </div>
+            </details>
+
+            <details className="group bg-white border border-neutral-200 open:border-accent">
+              <summary className="cursor-pointer px-6 py-5 font-body font-bold text-[16px] flex justify-between items-center">
+                Is it sticky?
+                <span className="text-accent text-xl group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
+                Dries in about 60 seconds. It&apos;s a fine mist, not a cream. Way less
+                sticky than the guilt of not wearing any.
+              </div>
+            </details>
+
+            <details className="group bg-white border border-neutral-200 open:border-accent">
+              <summary className="cursor-pointer px-6 py-5 font-body font-bold text-[16px] flex justify-between items-center">
+                What about my face / eyes?
+                <span className="text-accent text-xl group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
+                Close your eyes, hold your breath for 10 seconds. There&apos;s a face
+                shield option if you&apos;re precious about it. Most people just close
+                their eyes — it&apos;s SPF, not pepper spray.
+              </div>
+            </details>
+
+            <details className="group bg-white border border-neutral-200 open:border-accent">
+              <summary className="cursor-pointer px-6 py-5 font-body font-bold text-[16px] flex justify-between items-center">
+                Why $4?
+                <span className="text-accent text-xl group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
+                It covers the cost of the SPF 50+ formulation, booth maintenance,
+                and keeps the lights on. We&apos;re not trying to make you broke.
+                We&apos;re trying to stop you getting melanoma. Less than a coffee.
+              </div>
+            </details>
+
+            <details className="group bg-white border border-neutral-200 open:border-accent">
+              <summary className="cursor-pointer px-6 py-5 font-body font-bold text-[16px] flex justify-between items-center">
+                Will it ruin my clothes?
+                <span className="text-accent text-xl group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
+                Nah, it dries in 60 seconds. Your Kmart boardies will survive. We recommend applying before dressing if possible.
+              </div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══════ FINAL CTA ═══════ */}
+      <section className="gradient-sunburst py-20 md:py-28 text-center">
+        <div className="max-w-[600px] mx-auto px-6">
+          <h2 className="font-display text-[clamp(32px,6vw,56px)] text-white uppercase leading-[0.95] mb-4">
+            NAH, not today melanoma.
+          </h2>
+          <p className="font-body text-lg text-white/80 mb-10">
+            Be the first to know when we launch at Bondi.
+          </p>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+          >
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                if (status === "error") setStatus("idle");
+              }}
+              placeholder="your@email.com"
+              required
+              className="flex-1 px-5 py-3.5 bg-white/15 text-white placeholder-white/50 font-body text-[15px] border-2 border-white/30 outline-none focus:border-white transition-colors"
+              disabled={status === "loading" || status === "success"}
+            />
+            <button
+              type="submit"
+              disabled={status === "loading" || status === "success"}
+              className="px-8 py-3.5 bg-contrast text-white font-body font-bold text-[15px] uppercase tracking-[0.08em] hover:bg-neutral-800 transition-colors disabled:opacity-50"
+            >
+              {status === "loading"
+                ? "..."
+                : status === "success"
+                ? "YOU'RE IN"
+                : "YEAH, NAH — SIGN ME UP"}
+            </button>
+          </form>
+          {status === "success" && (
+            <p className="text-white/90 text-sm mt-3 font-body">
+              Legend. We&apos;ll let you know when we launch.
+            </p>
+          )}
+        </div>
+      </section>
+
+      {/* ═══════ FOOTER ═══════ */}
+      <footer className="bg-contrast py-12">
+        <div className="max-w-[1200px] mx-auto px-6 text-center">
+          <div className="font-display text-[32px] text-base uppercase mb-2">
+            NAH<span className="text-accent">.</span>
+          </div>
+          <p className="font-body text-sm text-neutral-500 mb-1">
+            Need a Hand? &mdash; Automated sunscreen for Australian beaches.
+          </p>
+          <p className="font-data text-[11px] text-neutral-700 uppercase tracking-[0.1em] mb-6">
+            SPF 50+ &bull; TGA Compliant &bull; Coming to Bondi
+          </p>
+          <div className="flex justify-center gap-6 mb-6">
+            <a
+              href="mailto:hello@getnah.com.au"
+              className="font-body text-sm text-neutral-500 hover:text-accent transition-colors"
+            >
+              hello@getnah.com.au
+            </a>
+          </div>
+          <p className="font-body text-[12px] text-neutral-700">
+            &copy; 2026 NAH. All rights reserved. ABN pending.
+          </p>
+        </div>
+      </footer>
+    </main>
+  );
+}
