@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const BEACHES = [
   { id: "bondi", name: "Bondi" },
@@ -12,15 +12,22 @@ const BEACHES = [
 ];
 
 const UNLOCK_TARGET = 500;
+const COUNT_SHOW_THRESHOLD = 50; // Hide counts until beach has 50+ votes
 
 export default function Home() {
   const [selectedBeach, setSelectedBeach] = useState<string | null>(null);
   const [email, setEmail] = useState("");
+  const [heroEmail, setHeroEmail] = useState("");
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+  const [heroStatus, setHeroStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const [heroErrorMsg, setHeroErrorMsg] = useState("");
   const [beachCounts, setBeachCounts] = useState<Record<string, number>>({});
+  const beachSectionRef = useRef<HTMLDivElement>(null);
 
   // Fetch beach counts on mount
   useEffect(() => {
@@ -30,7 +37,33 @@ export default function Home() {
       .catch(() => {});
   }, []);
 
-  async function handleSubmit(e: React.FormEvent) {
+  // Hero waitlist signup (no beach required)
+  async function handleHeroSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!heroEmail) return;
+    setHeroStatus("loading");
+    try {
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: heroEmail }),
+      });
+      if (res.ok) {
+        setHeroStatus("success");
+        setHeroEmail("");
+      } else {
+        const data = await res.json();
+        setHeroErrorMsg(data.error || "Something went wrong.");
+        setHeroStatus("error");
+      }
+    } catch {
+      setHeroErrorMsg("Connection failed. Try again.");
+      setHeroStatus("error");
+    }
+  }
+
+  // Beach vote signup (beach required)
+  async function handleBeachSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!email || !selectedBeach) return;
     setStatus("loading");
@@ -43,7 +76,6 @@ export default function Home() {
       if (res.ok) {
         setStatus("success");
         setEmail("");
-        // Optimistic count update
         setBeachCounts((prev) => ({
           ...prev,
           [selectedBeach]: (prev[selectedBeach] || 0) + 1,
@@ -60,10 +92,6 @@ export default function Home() {
   }
 
   const selectedBeachData = BEACHES.find((b) => b.id === selectedBeach);
-  const selectedCount = selectedBeach
-    ? beachCounts[selectedBeach] || 0
-    : 0;
-  const remaining = Math.max(UNLOCK_TARGET - selectedCount, 0);
 
   return (
     <main>
@@ -94,7 +122,7 @@ export default function Home() {
           <div className="w-[60px] h-[4px] bg-contrast mx-auto mb-10 animate-fade-in-up delay-200" />
 
           {/* Acronym reveal */}
-          <p className="font-body text-[14px] md:text-[16px] text-white/70 uppercase tracking-[0.15em] mb-12 animate-fade-in-up delay-200">
+          <p className="font-body text-[14px] md:text-[16px] text-white/70 uppercase tracking-[0.15em] mb-6 animate-fade-in-up delay-200">
             <span className="text-white font-bold">N</span>eed{" "}
             <span className="text-white font-bold">A</span>{" "}
             <span className="text-white font-bold">H</span>and?{" "}
@@ -102,65 +130,207 @@ export default function Home() {
             Australian beaches
           </p>
 
-          {/* Beach selector prompt */}
-          <p className="font-display text-[clamp(18px,3vw,28px)] text-white uppercase tracking-[0.05em] mb-8 animate-fade-in-up delay-300">
-            Help bring NAH to your beach
+          {/* Booth description — the clarity line */}
+          <p className="font-body text-[clamp(16px,2.5vw,20px)] text-white/90 max-w-[50ch] mx-auto mb-12 leading-relaxed animate-fade-in-up delay-200">
+            A walk-in booth on the sand that sprays you head-to-toe with SPF
+            50+ in seconds. Tap, spray, done.
           </p>
 
-          {/* Beach grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-lg mx-auto mb-8 animate-fade-in-up delay-300">
-            {BEACHES.map((beach) => {
-              const count = beachCounts[beach.id] || 0;
-              const progress = Math.min(
-                (count / UNLOCK_TARGET) * 100,
-                100
-              );
-              const isSelected = selectedBeach === beach.id;
-              const isUnlocked = count >= UNLOCK_TARGET;
-
-              return (
-                <button
-                  key={beach.id}
-                  onClick={() => {
-                    setSelectedBeach(beach.id);
-                    if (status === "error") setStatus("idle");
+          {/* Hero email capture — primary CTA */}
+          {heroStatus !== "success" ? (
+            <div className="animate-fade-in-up delay-300">
+              <p className="font-display text-[clamp(16px,2.5vw,22px)] text-white uppercase tracking-[0.05em] mb-6">
+                Be first to know when we launch
+              </p>
+              <form
+                onSubmit={handleHeroSubmit}
+                className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+              >
+                <input
+                  type="email"
+                  value={heroEmail}
+                  onChange={(e) => {
+                    setHeroEmail(e.target.value);
+                    if (heroStatus === "error") setHeroStatus("idle");
                   }}
-                  className={`relative px-4 py-4 border-2 transition-all text-left ${
-                    isSelected
-                      ? "border-white bg-white/20"
-                      : "border-white/30 bg-white/5 hover:bg-white/10 hover:border-white/50"
-                  }`}
+                  placeholder="your@email.com"
+                  required
+                  className="flex-1 px-5 py-3.5 bg-white/15 text-white placeholder-white/50 font-body text-[15px] border-2 border-white/30 outline-none focus:border-white transition-colors"
+                  disabled={heroStatus === "loading"}
+                />
+                <button
+                  type="submit"
+                  disabled={heroStatus === "loading"}
+                  className="px-8 py-3.5 bg-contrast text-white font-body font-bold text-[15px] uppercase tracking-[0.08em] hover:bg-neutral-800 transition-colors disabled:opacity-50"
                 >
-                  <span className="font-display text-[16px] sm:text-[18px] text-white uppercase block mb-2">
-                    {beach.name}
-                  </span>
-                  {/* Progress bar */}
-                  <div className="w-full h-[3px] bg-white/20 overflow-hidden mb-1">
-                    <div
-                      className="h-full bg-white transition-all duration-500"
-                      style={{ width: `${progress}%` }}
-                    />
-                  </div>
-                  <span className="font-data text-[10px] text-white/50 block">
-                    {isUnlocked
-                      ? "UNLOCKED"
-                      : `${count} / ${UNLOCK_TARGET}`}
-                  </span>
+                  {heroStatus === "loading"
+                    ? "..."
+                    : "YEAH, NAH \u2014 SIGN ME UP"}
                 </button>
-              );
-            })}
+              </form>
+              {heroStatus === "error" && (
+                <p className="text-white text-sm mt-3 font-body">
+                  {heroErrorMsg}
+                </p>
+              )}
+            </div>
+          ) : (
+            <div className="animate-fade-in-up delay-300">
+              <p className="font-accent text-[clamp(20px,4vw,32px)] text-white mb-3">
+                Legend.
+              </p>
+              <p className="font-body text-[15px] text-white/80 mb-2">
+                You&apos;re on the list. We&apos;ll let you know when NAH
+                hits the sand.
+              </p>
+              <p className="font-body text-[13px] text-white/50">
+                Tell your mates &mdash; the more interest, the sooner it
+                happens.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ═══════ HOW IT WORKS ═══════ */}
+      <section className="bg-base py-20 md:py-28">
+        <div className="max-w-[1200px] mx-auto px-6">
+          <p className="font-body text-[13px] font-bold text-accent uppercase tracking-[0.15em] mb-3">
+            How it works
+          </p>
+          <h2 className="font-display text-[clamp(32px,5vw,48px)] uppercase leading-[1.05] mb-4">
+            Four steps. Seconds.
+          </h2>
+          <p className="font-body text-lg text-neutral-600 max-w-[55ch] mb-16">
+            We didn&apos;t over-engineer this. Step in, tap, get sprayed, walk
+            out. Your back will thank you.
+          </p>
+
+          <div className="grid md:grid-cols-4 gap-0">
+            <div className="p-8 md:p-10 border border-neutral-200 border-b-0 md:border-b md:border-r-0">
+              <div className="font-display text-[56px] text-accent leading-none mb-4">
+                01
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                Step In
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                Walk into the booth on the beach. No booking. No account.
+                Just step in.
+              </p>
+            </div>
+            <div className="p-8 md:p-10 border border-neutral-200 border-b-0 md:border-b md:border-r-0">
+              <div className="font-display text-[56px] text-accent leading-none mb-4">
+                02
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                Tap & Pay
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                Tap your card. Cashless. Takes 2 seconds.
+              </p>
+            </div>
+            <div className="p-8 md:p-10 border border-neutral-200 border-b-0 md:border-b md:border-r-0">
+              <div className="font-display text-[56px] text-accent leading-none mb-4">
+                03
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                Get Sprayed
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                Full-body SPF 50+ coverage from head to toe. Every angle,
+                every spot your hands can&apos;t reach. Done in seconds.
+              </p>
+            </div>
+            <div className="p-8 md:p-10 border border-neutral-200">
+              <div className="font-display text-[56px] text-accent leading-none mb-4">
+                04
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                Walk Out
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                Quick dry. Full UV protection. Go enjoy the beach.
+                You&apos;re welcome.
+              </p>
+            </div>
           </div>
+        </div>
+      </section>
+
+      {/* ═══════ VOTE FOR YOUR BEACH ═══════ */}
+      <section className="gradient-sunburst py-20 md:py-28" ref={beachSectionRef}>
+        <div className="max-w-[720px] mx-auto px-6 text-center">
+          <p className="font-body text-[13px] font-bold text-white/60 uppercase tracking-[0.15em] mb-3">
+            Help us decide
+          </p>
+          <h2 className="font-display text-[clamp(28px,5vw,44px)] text-white uppercase leading-[1.05] mb-4">
+            Where should NAH land first?
+          </h2>
+          <p className="font-body text-[16px] text-white/70 max-w-[45ch] mx-auto mb-10">
+            Vote for your beach. The more votes, the sooner we set up there.
+          </p>
+
+          {/* Beach grid — hidden after selection */}
+          {!selectedBeach && status !== "success" && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-lg mx-auto mb-8 animate-fade-in-up">
+              {BEACHES.map((beach) => {
+                const count = beachCounts[beach.id] || 0;
+                const progress = Math.min(
+                  (count / UNLOCK_TARGET) * 100,
+                  100
+                );
+                const isUnlocked = count >= UNLOCK_TARGET;
+                const showCount = count >= COUNT_SHOW_THRESHOLD;
+
+                return (
+                  <button
+                    key={beach.id}
+                    onClick={() => {
+                      setSelectedBeach(beach.id);
+                      if (status === "error") setStatus("idle");
+                    }}
+                    className="relative px-4 py-4 border-2 border-white/30 bg-white/5 hover:bg-white/10 hover:border-white/50 transition-all text-left"
+                  >
+                    <span className="font-display text-[16px] sm:text-[18px] text-white uppercase block mb-2">
+                      {beach.name}
+                    </span>
+                    {/* Progress bar — only show when above threshold */}
+                    {showCount && (
+                      <>
+                        <div className="w-full h-[3px] bg-white/20 overflow-hidden mb-1">
+                          <div
+                            className="h-full bg-white transition-all duration-500"
+                            style={{ width: `${progress}%` }}
+                          />
+                        </div>
+                        <span className="font-data text-[10px] text-white/50 block">
+                          {isUnlocked
+                            ? "UNLOCKED"
+                            : `${count} votes`}
+                        </span>
+                      </>
+                    )}
+                    {!showCount && (
+                      <span className="font-data text-[10px] text-white/40 block">
+                        Vote &rarr;
+                      </span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          )}
 
           {/* Email form — appears after beach selection */}
           {selectedBeach && status !== "success" && (
             <div className="animate-fade-in-up">
-              <p className="font-body text-[14px] text-white/70 mb-4">
-                {remaining > 0
-                  ? `${remaining} more vote${remaining === 1 ? "" : "s"} to unlock ${selectedBeachData?.name}`
-                  : `${selectedBeachData?.name} is unlocked!`}
+              <p className="font-body text-[15px] text-white/70 mb-4">
+                Nice pick &mdash; {selectedBeachData?.name} it is. Drop your email
+                to lock in your vote.
               </p>
               <form
-                onSubmit={handleSubmit}
+                onSubmit={handleBeachSubmit}
                 className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
               >
                 <input
@@ -204,77 +374,10 @@ export default function Home() {
                 We&apos;ll let you know when NAH lands there.
               </p>
               <p className="font-body text-[13px] text-white/50">
-                Tell your mates — the more votes, the sooner it happens.
+                Tell your mates &mdash; the more votes, the sooner it happens.
               </p>
             </div>
           )}
-        </div>
-      </section>
-
-      {/* ═══════ HOW IT WORKS ═══════ */}
-      <section className="bg-base py-20 md:py-28">
-        <div className="max-w-[1200px] mx-auto px-6">
-          <p className="font-body text-[13px] font-bold text-accent uppercase tracking-[0.15em] mb-3">
-            How it works
-          </p>
-          <h2 className="font-display text-[clamp(32px,5vw,48px)] uppercase leading-[1.05] mb-4">
-            Four steps. Thirty seconds.
-          </h2>
-          <p className="font-body text-lg text-neutral-600 max-w-[55ch] mb-16">
-            We didn&apos;t over-engineer this. Step in, tap, get sprayed, walk
-            out. Your back will thank you.
-          </p>
-
-          <div className="grid md:grid-cols-4 gap-0">
-            <div className="p-8 md:p-10 border border-neutral-200 border-b-0 md:border-b md:border-r-0">
-              <div className="font-display text-[56px] text-accent leading-none mb-4">
-                01
-              </div>
-              <h3 className="font-display text-[22px] uppercase mb-2">
-                Step In
-              </h3>
-              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                Walk into the booth on the beach. No booking. No app. No
-                account. Just step in.
-              </p>
-            </div>
-            <div className="p-8 md:p-10 border border-neutral-200 border-b-0 md:border-b md:border-r-0">
-              <div className="font-display text-[56px] text-accent leading-none mb-4">
-                02
-              </div>
-              <h3 className="font-display text-[22px] uppercase mb-2">
-                Tap & Pay
-              </h3>
-              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                $5 on the card reader. $15 for a family of 4. Cashless. Takes 2
-                seconds.
-              </p>
-            </div>
-            <div className="p-8 md:p-10 border border-neutral-200 border-b-0 md:border-b md:border-r-0">
-              <div className="font-display text-[56px] text-accent leading-none mb-4">
-                03
-              </div>
-              <h3 className="font-display text-[22px] uppercase mb-2">
-                Get Sprayed
-              </h3>
-              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                16 HVLP nozzles across 4 zones &mdash; head, torso, arms, legs.
-                SPF 50+ TGA-compliant sunscreen in 30 seconds. No missed spots.
-              </p>
-            </div>
-            <div className="p-8 md:p-10 border border-neutral-200">
-              <div className="font-display text-[56px] text-accent leading-none mb-4">
-                04
-              </div>
-              <h3 className="font-display text-[22px] uppercase mb-2">
-                Walk Out
-              </h3>
-              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                60 seconds to dry. Full UV protection. Go enjoy the beach.
-                You&apos;re welcome.
-              </p>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -344,9 +447,9 @@ export default function Home() {
                 360&deg; coverage
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                16 HVLP nozzles spray every angle across 4 zones. Your back,
-                your ears, the tops of your feet &mdash; all covered. No more
-                patchy application or begging your mate to get your shoulders.
+                Full-body spray covers every angle. Your back, your ears,
+                the tops of your feet &mdash; all covered. No more patchy
+                application or begging your mate to get your shoulders.
               </p>
             </div>
             <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
@@ -364,15 +467,15 @@ export default function Home() {
             </div>
             <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
               <div className="font-body text-[12px] font-bold text-neutral-500 uppercase tracking-[0.12em] mb-2">
-                Cheaper Than a Flat White
+                Cheaper Than a Bottle
               </div>
               <h3 className="font-display text-[22px] uppercase mb-2">
-                $5 &mdash; or $15 for the family
+                Less than a flat white
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
                 A bottle of sunscreen costs $15-30 and won&apos;t cover you
-                properly. $5 for full body coverage is a no-brainer. Bring the
-                kids &mdash; $15 covers a family of 4.
+                properly. NAH gives you full body coverage for less than a
+                coffee. Family pricing available too.
               </p>
             </div>
             <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
@@ -383,7 +486,7 @@ export default function Home() {
                 Come back in 2 hours.
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                86% of beachgoers don&apos;t reapply. With NAH it takes 30
+                86% of beachgoers don&apos;t reapply. With NAH it takes
                 seconds, not 10 minutes of wrestling with a tube. Step in, get
                 sprayed, get back to the beach.
               </p>
@@ -396,9 +499,9 @@ export default function Home() {
                 Right there. On the beach.
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                It&apos;s on the beach. It takes 30 seconds. It costs $5. You
-                don&apos;t need an app or an account. Every barrier to wearing
-                sunscreen &mdash; gone.
+                It&apos;s on the beach. It takes seconds. You don&apos;t
+                need an app or an account. Every barrier to wearing sunscreen
+                &mdash; gone.
               </p>
             </div>
             <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
@@ -438,10 +541,9 @@ export default function Home() {
                 </span>
               </summary>
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
-                Step into the booth. Tap $5 on the card reader. 16 HVLP nozzles
-                spray you head-to-toe with SPF 50+ sunscreen in 30 seconds
-                across 4 zones &mdash; head, torso, arms, legs. 60 seconds to
-                dry. Walk out. That&apos;s literally it.
+                Step into the booth. Tap your card. You get sprayed head-to-toe
+                with SPF 50+ sunscreen in seconds. Quick dry. Walk out.
+                That&apos;s literally it.
               </div>
             </details>
 
@@ -469,8 +571,8 @@ export default function Home() {
                 </span>
               </summary>
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
-                Dries in about 60 seconds. It&apos;s a fine mist, not a cream.
-                Way less sticky than the guilt of not wearing any.
+                Dries quickly. It&apos;s a fine mist, not a cream. Way less
+                sticky than the guilt of not wearing any.
               </div>
             </details>
 
@@ -482,25 +584,23 @@ export default function Home() {
                 </span>
               </summary>
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
-                Close your eyes, hold your breath for 30 seconds. There&apos;s a
-                face shield option if you&apos;re precious about it. Most people
-                just close their eyes &mdash; it&apos;s SPF, not pepper spray.
+                Close your eyes, hold your breath. There&apos;s a face shield
+                option if you&apos;re precious about it. Most people just close
+                their eyes &mdash; it&apos;s SPF, not pepper spray.
               </div>
             </details>
 
             <details className="group bg-white border border-neutral-200 open:border-accent">
               <summary className="cursor-pointer px-6 py-5 font-body font-bold text-[16px] flex justify-between items-center">
-                Why $5?
+                How much does it cost?
                 <span className="text-accent text-xl group-open:rotate-45 transition-transform">
                   +
                 </span>
               </summary>
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
-                It covers the cost of the SPF 50+ formulation, booth
-                maintenance, and keeps the lights on. We&apos;re not trying to
-                make you broke. We&apos;re trying to stop you getting melanoma.
-                Less than a flat white. Families get a deal &mdash; $15 for up
-                to 4 people.
+                Less than a flat white. We&apos;re keeping it affordable
+                because the goal is to stop you getting melanoma, not to make
+                you broke. Family pricing available too.
               </div>
             </details>
 
@@ -512,8 +612,8 @@ export default function Home() {
                 </span>
               </summary>
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
-                Nah, it dries in 60 seconds. Your Kmart boardies will survive.
-                We recommend applying in your swimmers before getting dressed.
+                Nah, it dries quickly. Your Kmart boardies will survive. We
+                recommend applying in your swimmers before getting dressed.
               </div>
             </details>
 
@@ -525,9 +625,9 @@ export default function Home() {
                 </span>
               </summary>
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
-                Yeah. $15 covers up to 4 people &mdash; one at a time through
-                the booth. No more wrestling sunscreen onto kids who&apos;d
-                rather be in the water. 30 seconds each, done.
+                Yeah. Family pricing covers up to 4 people &mdash; one at a time
+                through the booth. No more wrestling sunscreen onto kids
+                who&apos;d rather be in the water. Seconds each, done.
               </div>
             </details>
           </div>
@@ -541,63 +641,39 @@ export default function Home() {
             NAH, not today melanoma.
           </h2>
           <p className="font-body text-lg text-white/80 mb-10">
-            {selectedBeach
-              ? `You voted for ${selectedBeachData?.name}. Tell your mates.`
-              : "Pick your beach and help decide where we launch first."}
+            Be the first to know when we launch.
           </p>
-
-          {/* Bottom CTA — simplified beach + email if not yet signed up */}
-          {status !== "success" ? (
-            <div>
-              {!selectedBeach && (
-                <div className="grid grid-cols-3 gap-2 max-w-sm mx-auto mb-6">
-                  {BEACHES.map((beach) => (
-                    <button
-                      key={beach.id}
-                      onClick={() => setSelectedBeach(beach.id)}
-                      className={`px-3 py-2 border-2 font-display text-[13px] text-white uppercase transition-all ${
-                        selectedBeach === beach.id
-                          ? "border-white bg-white/20"
-                          : "border-white/30 bg-white/5 hover:bg-white/10"
-                      }`}
-                    >
-                      {beach.name}
-                    </button>
-                  ))}
-                </div>
-              )}
-              {selectedBeach && (
-                <form
-                  onSubmit={handleSubmit}
-                  className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
-                >
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => {
-                      setEmail(e.target.value);
-                      if (status === "error") setStatus("idle");
-                    }}
-                    placeholder="your@email.com"
-                    required
-                    className="flex-1 px-5 py-3.5 bg-white/15 text-white placeholder-white/50 font-body text-[15px] border-2 border-white/30 outline-none focus:border-white transition-colors"
-                    disabled={status === "loading"}
-                  />
-                  <button
-                    type="submit"
-                    disabled={status === "loading"}
-                    className="px-8 py-3.5 bg-contrast text-white font-body font-bold text-[15px] uppercase tracking-[0.08em] hover:bg-neutral-800 transition-colors disabled:opacity-50"
-                  >
-                    {status === "loading"
-                      ? "..."
-                      : `VOTE FOR ${selectedBeachData?.name.toUpperCase()}`}
-                  </button>
-                </form>
-              )}
-            </div>
-          ) : (
-            <p className="font-body text-[15px] text-white/80">
-              Tell your mates &mdash; the more votes, the sooner it happens.
+          <form
+            onSubmit={handleHeroSubmit}
+            className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto"
+          >
+            <input
+              type="email"
+              value={heroEmail}
+              onChange={(e) => {
+                setHeroEmail(e.target.value);
+                if (heroStatus === "error") setHeroStatus("idle");
+              }}
+              placeholder="your@email.com"
+              required
+              className="flex-1 px-5 py-3.5 bg-white/15 text-white placeholder-white/50 font-body text-[15px] border-2 border-white/30 outline-none focus:border-white transition-colors"
+              disabled={heroStatus === "loading" || heroStatus === "success"}
+            />
+            <button
+              type="submit"
+              disabled={heroStatus === "loading" || heroStatus === "success"}
+              className="px-8 py-3.5 bg-contrast text-white font-body font-bold text-[15px] uppercase tracking-[0.08em] hover:bg-neutral-800 transition-colors disabled:opacity-50"
+            >
+              {heroStatus === "loading"
+                ? "..."
+                : heroStatus === "success"
+                ? "YOU'RE IN"
+                : "YEAH, NAH \u2014 SIGN ME UP"}
+            </button>
+          </form>
+          {heroStatus === "success" && (
+            <p className="text-white/90 text-sm mt-3 font-body">
+              Legend. We&apos;ll let you know when we launch.
             </p>
           )}
         </div>
@@ -616,7 +692,7 @@ export default function Home() {
             &mdash; That&apos;s what we&apos;re here for.
           </p>
           <p className="font-data text-[11px] text-neutral-700 uppercase tracking-[0.1em] mb-6">
-            SPF 50+ &bull; TGA Compliant &bull; $5 per spray &bull; Coming to
+            SPF 50+ &bull; TGA Compliant &bull; Full Body &bull; Coming to
             Sydney beaches
           </p>
           <div className="flex justify-center gap-6 mb-6">
