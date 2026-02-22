@@ -22,12 +22,25 @@ export const metadata: Metadata = {
     siteName: "NAH.",
     locale: "en_AU",
     type: "website",
+    images: [
+      {
+        url: "https://getnah.com.au/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "NAH. — Mate, you're cooked. Automated sunscreen for Australian beaches.",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "NAH. — Automated Sunscreen Booth",
     description:
       "Full body SPF 50+ in 30 seconds. $5. Coming to Bondi.",
+    images: ["https://getnah.com.au/og-image.png"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   robots: {
     index: true,
