@@ -27,14 +27,24 @@ export default function Home() {
   const [errorMsg, setErrorMsg] = useState("");
   const [heroErrorMsg, setHeroErrorMsg] = useState("");
   const [beachCounts, setBeachCounts] = useState<Record<string, number>>({});
+  const [beachCountsLoaded, setBeachCountsLoaded] = useState(false);
   const beachSectionRef = useRef<HTMLDivElement>(null);
 
   // Fetch beach counts on mount
   useEffect(() => {
     fetch("/api/beach-counts")
       .then((r) => r.json())
-      .then(setBeachCounts)
-      .catch(() => {});
+      .then((data) => {
+        setBeachCounts(data);
+        setBeachCountsLoaded(true);
+      })
+      .catch(() => setBeachCountsLoaded(true));
+  }, []);
+
+  // Pre-fill beach email from localStorage if user already signed up in hero
+  useEffect(() => {
+    const saved = localStorage.getItem("nah-email");
+    if (saved) setEmail(saved);
   }, []);
 
   // Hero waitlist signup (no beach required)
@@ -50,6 +60,8 @@ export default function Home() {
       });
       if (res.ok) {
         setHeroStatus("success");
+        localStorage.setItem("nah-email", heroEmail);
+        setEmail(heroEmail); // pre-fill beach section
         setHeroEmail("");
       } else {
         const data = await res.json();
@@ -75,7 +87,7 @@ export default function Home() {
       });
       if (res.ok) {
         setStatus("success");
-        setEmail("");
+        localStorage.setItem("nah-email", email);
         setBeachCounts((prev) => ({
           ...prev,
           [selectedBeach]: (prev[selectedBeach] || 0) + 1,
@@ -148,7 +160,7 @@ export default function Home() {
                   No spam. Just SPF.
                 </p>
                 <svg
-                  className="absolute left-1/2 top-full w-[80px] h-[40px] ml-[40px] sm:ml-[60px]"
+                  className="absolute left-1/2 top-full w-[60px] h-[30px] sm:w-[80px] sm:h-[40px] ml-[20px] sm:ml-[60px]"
                   viewBox="0 0 80 40"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
@@ -212,10 +224,16 @@ export default function Home() {
                 You&apos;re on the list. We&apos;ll let you know when NAH
                 hits the sand.
               </p>
-              <p className="font-body text-[13px] text-white/50">
+              <p className="font-body text-[13px] text-white/50 mb-6">
                 Tell your mates &mdash; the more interest, the sooner it
                 happens.
               </p>
+              <button
+                onClick={() => beachSectionRef.current?.scrollIntoView({ behavior: "smooth" })}
+                className="inline-block px-6 py-3 border-2 border-white/40 text-white font-body font-bold text-[14px] uppercase tracking-[0.08em] hover:bg-white/10 transition-colors"
+              >
+                Vote for your beach &darr;
+              </button>
             </div>
           )}
         </div>
@@ -324,8 +342,14 @@ export default function Home() {
                     <span className="font-display text-[16px] sm:text-[18px] text-white uppercase block mb-2">
                       {beach.name}
                     </span>
-                    {/* Progress bar — only show when above threshold */}
-                    {showCount && (
+                    {/* Loading skeleton */}
+                    {!beachCountsLoaded && (
+                      <div className="w-full h-[3px] bg-white/20 overflow-hidden mb-1">
+                        <div className="h-full w-1/3 bg-white/30 animate-pulse" />
+                      </div>
+                    )}
+                    {/* Progress bar — only show when loaded and above threshold */}
+                    {beachCountsLoaded && showCount && (
                       <>
                         <div className="w-full h-[3px] bg-white/20 overflow-hidden mb-1">
                           <div
@@ -340,7 +364,7 @@ export default function Home() {
                         </span>
                       </>
                     )}
-                    {!showCount && (
+                    {beachCountsLoaded && !showCount && (
                       <span className="font-data text-[10px] text-white/40 block">
                         Vote &rarr;
                       </span>
@@ -355,8 +379,9 @@ export default function Home() {
           {selectedBeach && status !== "success" && (
             <div className="animate-fade-in-up">
               <p className="font-body text-[15px] text-white/70 mb-4">
-                Nice pick &mdash; {selectedBeachData?.name} it is. Drop your email
-                to lock in your vote.
+                {email
+                  ? `Welcome back — voting for ${selectedBeachData?.name}.`
+                  : `Nice pick — ${selectedBeachData?.name} it is. Drop your email to lock in your vote.`}
               </p>
               <form
                 onSubmit={handleBeachSubmit}
