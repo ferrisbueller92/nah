@@ -176,6 +176,15 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ═══════ SKIN IN THE GAME ═══════ */}
+      <section className="bg-base py-16 md:py-20">
+        <div className="max-w-[720px] mx-auto px-6 text-center">
+          <p className="font-accent text-[clamp(28px,5vw,44px)] text-contrast leading-[1.2]">
+            You&apos;ve already got skin in the game.
+          </p>
+        </div>
+      </section>
+
       {/* ═══════ WARNING LABEL ═══════ */}
       <section className="bg-contrast py-20 md:py-28">
         <div className="max-w-[720px] mx-auto px-6">
