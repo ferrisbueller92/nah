@@ -102,7 +102,7 @@ export default function Home() {
             <p className="text-white text-sm mt-3 font-body">{errorMsg}</p>
           )}
           <p className="font-data text-[11px] text-white/40 mt-8 uppercase tracking-[0.1em] animate-fade-in-up delay-400">
-            Coming to Bondi &bull; Summer 2026
+            Coming to Bondi
           </p>
         </div>
       </section>
@@ -257,8 +257,8 @@ export default function Home() {
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
                 A bottle of sunscreen costs $15-30 and won&apos;t cover you properly.
-                Skin cancer treatment costs ~$50K. $5 for full body coverage is a
-                no-brainer. Bring the kids &mdash; $15 covers a family of 4.
+                $5 for full body coverage is a no-brainer. Bring the kids &mdash;
+                $15 covers a family of 4.
               </p>
             </div>
             <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
