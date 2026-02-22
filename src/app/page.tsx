@@ -691,7 +691,7 @@ export default function Home() {
       {/* ═══════ FINAL CTA ═══════ */}
       <section className="gradient-sunburst py-20 md:py-28 text-center">
         <div className="max-w-[600px] mx-auto px-6">
-          <h2 className="font-display text-[clamp(32px,6vw,56px)] text-white uppercase leading-[0.95] mb-4">
+          <h2 className="font-display text-[clamp(32px,6vw,56px)] text-white uppercase leading-[1.1] mb-6">
             NAH, not today melanoma.
           </h2>
           <p className="font-body text-lg text-white/80 mb-10">
