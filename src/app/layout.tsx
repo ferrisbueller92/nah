@@ -55,6 +55,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-AU">
+      <head>
+        <meta property="fb:app_id" content="1411485070658883" />
+      </head>
       <body className="antialiased">{children}</body>
     </html>
   );
