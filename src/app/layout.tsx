@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "NAH. — Automated Sunscreen Booth | Don't Be #3",
   description:
-    "Australia's first automated sunscreen booth. Full body SPF 50+ in 10 seconds for $4. Coming to Bondi. Join the waitlist.",
+    "Australia's first automated sunscreen booth. Full body SPF 50+ in 30 seconds for $5. Coming to Bondi. Join the waitlist.",
   keywords: [
     "sunscreen booth",
     "automated sunscreen",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "NAH. — Mate, You're Cooked.",
     description:
-      "2 in 3 Australians will get skin cancer. Full body SPF 50+ in 10 seconds. $4. No excuses.",
+      "2 in 3 Australians will get skin cancer. Full body SPF 50+ in 30 seconds. $5. No excuses.",
     url: "https://getnah.com.au",
     siteName: "NAH.",
     locale: "en_AU",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "NAH. — Automated Sunscreen Booth",
     description:
-      "Full body SPF 50+ in 10 seconds. $4. Coming to Bondi.",
+      "Full body SPF 50+ in 30 seconds. $5. Coming to Bondi.",
   },
   robots: {
     index: true,

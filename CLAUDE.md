@@ -35,11 +35,18 @@
 - Gradient sunBurst hero is the signature look
 - Danger Red only for negative health statistics
 
+## Pricing
+- Standard: $5 per spray
+- Family: $15 for up to 4 people
+- Event: $3-4 bulk rate
+- Spray time: 30 seconds + 60 sec dry
+
 ## Page Structure
 1. Hero (gradient sunBurst, "MATE, YOU'RE COOKED.", waitlist CTA)
-2. Stats bar (2 in 3, 10 sec, $4, 90%)
-3. How it works (Walk In → Get Sprayed → Walk Out)
-4. Warning label (dark humour section)
-5. FAQ (NAH voice)
-6. Final CTA (waitlist repeat)
-7. Footer
+2. Stats bar (2 in 3, 86% don't reapply, $5, 90%)
+3. How it works (Step In → Tap & Pay → Get Sprayed → Walk Out)
+4. Warning label (18%/86% stats + 17,443 melanoma cases)
+5. Why NAH (6 benefit cards incl. family pricing + proven overseas)
+6. FAQ (NAH voice, 7 questions incl. family)
+7. Final CTA (waitlist repeat)
+8. Footer

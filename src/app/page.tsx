@@ -53,8 +53,8 @@ export default function Home() {
             Mate, you&apos;re cooked.
           </h1>
           <p className="font-body text-lg md:text-xl text-white/85 mb-10 max-w-xl mx-auto animate-fade-in-up delay-200">
-            Australia&apos;s first automated sunscreen booth. Full body SPF 50+ in 10
-            seconds. $4. No excuses.
+            Australia&apos;s first automated sunscreen booth. Full body SPF 50+ in 30
+            seconds. $5. No excuses.
           </p>
           <form
             onSubmit={handleSubmit}
@@ -111,18 +111,18 @@ export default function Home() {
           </div>
           <div className="p-8 md:p-12 text-center border-b md:border-b-0 md:border-r border-neutral-800">
             <div className="font-display text-[clamp(36px,5vw,48px)] text-accent uppercase leading-none mb-2">
-              10 sec
+              86%
             </div>
             <div className="font-body text-sm text-neutral-500">
-              Full body coverage
+              Don&apos;t reapply sunscreen
             </div>
           </div>
           <div className="p-8 md:p-12 text-center border-r border-neutral-800">
             <div className="font-display text-[clamp(36px,5vw,48px)] text-accent uppercase leading-none mb-2">
-              $4
+              $5
             </div>
             <div className="font-body text-sm text-neutral-500">
-              Less than a coffee
+              Less than a flat white
             </div>
           </div>
           <div className="p-8 md:p-12 text-center">
@@ -143,24 +143,24 @@ export default function Home() {
             How it works
           </p>
           <h2 className="font-display text-[clamp(32px,5vw,48px)] uppercase leading-[1.05] mb-4">
-            Three steps. Ten seconds.
+            Four steps. Thirty seconds.
           </h2>
           <p className="font-body text-lg text-neutral-600 max-w-[55ch] mb-16">
-            We didn&apos;t over-engineer this. Walk in, get sprayed, walk out.
+            We didn&apos;t over-engineer this. Step in, tap, get sprayed, walk out.
             Your back will thank you.
           </p>
 
-          <div className="grid md:grid-cols-3 gap-0">
+          <div className="grid md:grid-cols-4 gap-0">
             <div className="p-8 md:p-10 border border-neutral-200 border-b-0 md:border-b md:border-r-0">
               <div className="font-display text-[56px] text-accent leading-none mb-4">
                 01
               </div>
               <h3 className="font-display text-[22px] uppercase mb-2">
-                Walk In
+                Step In
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                Step into the booth on the beach. No booking. No app. No
-                account. Just walk in.
+                Walk into the booth on the beach. No booking. No app. No
+                account. Just step in.
               </p>
             </div>
             <div className="p-8 md:p-10 border border-neutral-200 border-b-0 md:border-b md:border-r-0">
@@ -168,23 +168,34 @@ export default function Home() {
                 02
               </div>
               <h3 className="font-display text-[22px] uppercase mb-2">
+                Tap & Pay
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                $5 on the card reader. $15 for a family of 4. Cashless. Takes 2 seconds.
+              </p>
+            </div>
+            <div className="p-8 md:p-10 border border-neutral-200 border-b-0 md:border-b md:border-r-0">
+              <div className="font-display text-[56px] text-accent leading-none mb-4">
+                03
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
                 Get Sprayed
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                16 nozzles. 360&deg; coverage. SPF 50+ TGA-compliant
-                sunscreen. Head to toe in 10 seconds flat.
+                16 HVLP nozzles across 4 zones &mdash; head, torso, arms, legs. SPF 50+
+                TGA-compliant sunscreen in 30 seconds. No missed spots.
               </p>
             </div>
             <div className="p-8 md:p-10 border border-neutral-200">
               <div className="font-display text-[56px] text-accent leading-none mb-4">
-                03
+                04
               </div>
               <h3 className="font-display text-[22px] uppercase mb-2">
                 Walk Out
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                Tap $4 on the card reader. Done. Go enjoy the beach. No missed
-                spots. No sticky hands. You&apos;re welcome.
+                60 seconds to dry. Full UV protection. Go enjoy the beach.
+                You&apos;re welcome.
               </p>
             </div>
           </div>
@@ -199,22 +210,32 @@ export default function Home() {
               Warning
             </span>
             <p className="font-accent text-[clamp(18px,3vw,24px)] text-base/90 leading-relaxed mb-6">
-              Not using sunscreen may result in looking like a lobster, feeling
-              like an idiot, and potentially contributing to Australia&apos;s
-              world-leading melanoma statistics.
+              18% of beachgoers have zero sunscreen. 86% don&apos;t reapply
+              within 2 hours. The problem isn&apos;t that people forget &mdash;
+              it&apos;s that applying cream is messy, slow, and annoying.
             </p>
             <p className="font-accent text-[clamp(18px,3vw,24px)] text-accent leading-relaxed">
-              But sure, you&apos;ll be fine.
+              NAH fixes all three.
             </p>
           </div>
 
-          <div className="mt-16 text-center">
-            <div className="font-display text-[clamp(56px,10vw,96px)] text-error uppercase leading-none mb-2">
-              #1
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+            <div>
+              <div className="font-display text-[clamp(48px,8vw,80px)] text-error uppercase leading-none mb-2">
+                #1
+              </div>
+              <p className="font-body text-lg text-neutral-400">
+                Australia has the highest rate of skin cancer in the world.
+              </p>
             </div>
-            <p className="font-body text-lg text-neutral-400">
-              Australia has the highest rate of skin cancer in the world.
-            </p>
+            <div>
+              <div className="font-display text-[clamp(48px,8vw,80px)] text-accent uppercase leading-none mb-2">
+                17,443
+              </div>
+              <p className="font-body text-lg text-neutral-400">
+                New melanoma cases in Australia this year alone.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -238,9 +259,9 @@ export default function Home() {
                 360&deg; coverage
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                16 nozzles spray every angle. UV dye testing shows 100% body
-                coverage vs ~60% with manual application. Your back, your ears,
-                the tops of your feet — all covered.
+                16 HVLP nozzles spray every angle across 4 zones. Your back, your ears,
+                the tops of your feet &mdash; all covered. No more patchy application
+                or begging your mate to get your shoulders.
               </p>
             </div>
             <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
@@ -253,20 +274,33 @@ export default function Home() {
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
                 Same active ingredients as the stuff at Priceline. TGA-listed,
                 broad spectrum, made by an Australian contract lab. Not some
-                dodgy spray — proper sunscreen.
+                dodgy spray &mdash; proper sunscreen.
               </p>
             </div>
             <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
               <div className="font-body text-[12px] font-bold text-neutral-500 uppercase tracking-[0.12em] mb-2">
-                Cheaper Than a Coffee
+                Cheaper Than a Flat White
               </div>
               <h3 className="font-display text-[22px] uppercase mb-2">
-                $4 flat
+                $5 &mdash; or $15 for the family
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
                 A bottle of sunscreen costs $15-30 and won&apos;t cover you properly.
-                Skin cancer treatment costs ~$50K. $4 for full body coverage is a
-                no-brainer.
+                Skin cancer treatment costs ~$50K. $5 for full body coverage is a
+                no-brainer. Bring the kids &mdash; $15 covers a family of 4.
+              </p>
+            </div>
+            <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
+              <div className="font-body text-[12px] font-bold text-neutral-500 uppercase tracking-[0.12em] mb-2">
+                Easy Reapplication
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                Come back in 2 hours.
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                86% of beachgoers don&apos;t reapply. With NAH it takes 30 seconds,
+                not 10 minutes of wrestling with a tube. Step in, get sprayed, get
+                back to the beach.
               </p>
             </div>
             <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
@@ -277,9 +311,22 @@ export default function Home() {
                 Right there. On the beach.
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                It&apos;s on the beach. It takes 10 seconds. It costs $4. You
+                It&apos;s on the beach. It takes 30 seconds. It costs $5. You
                 don&apos;t need an app or an account. Every barrier to wearing
-                sunscreen — gone.
+                sunscreen &mdash; gone.
+              </p>
+            </div>
+            <div className="bg-white border border-neutral-200 p-8 border-t-[3px] border-t-accent">
+              <div className="font-body text-[12px] font-bold text-neutral-500 uppercase tracking-[0.12em] mb-2">
+                Proven Overseas
+              </div>
+              <h3 className="font-display text-[22px] uppercase mb-2">
+                Already works. Just not here.
+              </h3>
+              <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
+                Automated sunscreen booths already operate at resorts in the US
+                and paid dispensers are at beaches across Australia. NAH brings
+                full-body automated coverage to Aussie beaches for the first time.
               </p>
             </div>
           </div>
@@ -303,9 +350,10 @@ export default function Home() {
                 <span className="text-accent text-xl group-open:rotate-45 transition-transform">+</span>
               </summary>
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
-                Walk into the booth. Press start. 16 nozzles spray you head-to-toe
-                with SPF 50+ sunscreen in 10 seconds. Tap $4 on the card reader.
-                Walk out. That&apos;s literally it. We didn&apos;t over-engineer this.
+                Step into the booth. Tap $5 on the card reader. 16 HVLP nozzles
+                spray you head-to-toe with SPF 50+ sunscreen in 30 seconds across
+                4 zones &mdash; head, torso, arms, legs. 60 seconds to dry. Walk out.
+                That&apos;s literally it.
               </div>
             </details>
 
@@ -317,7 +365,8 @@ export default function Home() {
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
                 SPF 50+, TGA-listed, broad-spectrum sunscreen made by an Australian
                 contract lab. Same active ingredients as the stuff the Cancer Council
-                sells. We just spray it better.
+                sells. Full ingredient list is displayed on the booth screen before
+                you spray, with a sensitive skin warning. We just apply it better.
               </div>
             </details>
 
@@ -338,21 +387,22 @@ export default function Home() {
                 <span className="text-accent text-xl group-open:rotate-45 transition-transform">+</span>
               </summary>
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
-                Close your eyes, hold your breath for 10 seconds. There&apos;s a face
+                Close your eyes, hold your breath for 30 seconds. There&apos;s a face
                 shield option if you&apos;re precious about it. Most people just close
-                their eyes — it&apos;s SPF, not pepper spray.
+                their eyes &mdash; it&apos;s SPF, not pepper spray.
               </div>
             </details>
 
             <details className="group bg-white border border-neutral-200 open:border-accent">
               <summary className="cursor-pointer px-6 py-5 font-body font-bold text-[16px] flex justify-between items-center">
-                Why $4?
+                Why $5?
                 <span className="text-accent text-xl group-open:rotate-45 transition-transform">+</span>
               </summary>
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
                 It covers the cost of the SPF 50+ formulation, booth maintenance,
                 and keeps the lights on. We&apos;re not trying to make you broke.
-                We&apos;re trying to stop you getting melanoma. Less than a coffee.
+                We&apos;re trying to stop you getting melanoma. Less than a flat white.
+                Families get a deal &mdash; $15 for up to 4 people.
               </div>
             </details>
 
@@ -362,7 +412,19 @@ export default function Home() {
                 <span className="text-accent text-xl group-open:rotate-45 transition-transform">+</span>
               </summary>
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
-                Nah, it dries in 60 seconds. Your Kmart boardies will survive. We recommend applying before dressing if possible.
+                Nah, it dries in 60 seconds. Your Kmart boardies will survive. We recommend applying in your swimmers before getting dressed.
+              </div>
+            </details>
+
+            <details className="group bg-white border border-neutral-200 open:border-accent">
+              <summary className="cursor-pointer px-6 py-5 font-body font-bold text-[16px] flex justify-between items-center">
+                Can I bring the family?
+                <span className="text-accent text-xl group-open:rotate-45 transition-transform">+</span>
+              </summary>
+              <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
+                Yeah. $15 covers up to 4 people &mdash; one at a time through the
+                booth. No more wrestling sunscreen onto kids who&apos;d rather be
+                in the water. 30 seconds each, done.
               </div>
             </details>
           </div>
@@ -421,10 +483,10 @@ export default function Home() {
             NAH<span className="text-accent">.</span>
           </div>
           <p className="font-body text-sm text-neutral-500 mb-1">
-            Need a Hand? &mdash; Automated sunscreen for Australian beaches.
+            Automated sunscreen for Australian beaches.
           </p>
           <p className="font-data text-[11px] text-neutral-700 uppercase tracking-[0.1em] mb-6">
-            SPF 50+ &bull; TGA Compliant &bull; Coming to Bondi
+            SPF 50+ &bull; TGA Compliant &bull; $5 per spray &bull; Coming to Bondi
           </p>
           <div className="flex justify-center gap-6 mb-6">
             <a
