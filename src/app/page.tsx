@@ -34,28 +34,37 @@ export default function Home() {
   return (
     <main>
       {/* ═══════ HERO ═══════ */}
-      <section className="gradient-sunburst relative overflow-hidden min-h-[90vh] flex items-center justify-center">
+      <section className="gradient-sunburst relative overflow-hidden min-h-[100vh] flex items-center justify-center">
         {/* Background watermark */}
         <div
           className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
           aria-hidden="true"
         >
-          <span className="font-display text-[clamp(200px,30vw,400px)] uppercase text-white/[0.08] leading-none">
+          <span className="font-display text-[clamp(200px,30vw,400px)] uppercase text-white/[0.15] leading-none">
             NAH.
           </span>
         </div>
 
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-          <p className="font-data text-[13px] text-white/80 uppercase tracking-[0.15em] mb-6 animate-fade-in-up">
-            2 in 3 Australians will get skin cancer
-          </p>
-          <h1 className="font-accent text-[clamp(40px,8vw,72px)] text-white leading-[0.95] mb-4 animate-fade-in-up delay-100">
-            Mate, you&apos;re cooked.
+          {/* Brand wordmark — first thing people see */}
+          <h1 className="font-display text-[clamp(80px,15vw,160px)] text-white uppercase leading-[0.85] tracking-[0.02em] mb-6 animate-fade-in-up">
+            NAH<span className="text-contrast">.</span>
           </h1>
-          <p className="font-body text-lg md:text-xl text-white/85 mb-10 max-w-xl mx-auto animate-fade-in-up delay-200">
-            Australia&apos;s first automated sunscreen booth. Full body SPF 50+ in 30
-            seconds. $5. No excuses.
+
+          {/* Tagline in Permanent Marker */}
+          <p className="font-accent text-[clamp(24px,5vw,44px)] text-white leading-[1.1] mb-6 animate-fade-in-up delay-100">
+            Mate, you&apos;re cooked.
           </p>
+
+          {/* Accent bar */}
+          <div className="w-[60px] h-[4px] bg-contrast mx-auto mb-10 animate-fade-in-up delay-200" />
+
+          {/* Subtitle */}
+          <p className="font-body text-[14px] md:text-[16px] text-white/70 uppercase tracking-[0.15em] mb-12 animate-fade-in-up delay-200">
+            Automated sunscreen for Australian beaches
+          </p>
+
+          {/* Waitlist CTA */}
           <form
             onSubmit={handleSubmit}
             className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto animate-fade-in-up delay-300"
@@ -92,47 +101,9 @@ export default function Home() {
           {status === "error" && (
             <p className="text-white text-sm mt-3 font-body">{errorMsg}</p>
           )}
-          <p className="font-data text-[11px] text-white/40 mt-6 uppercase tracking-[0.1em] animate-fade-in-up delay-400">
+          <p className="font-data text-[11px] text-white/40 mt-8 uppercase tracking-[0.1em] animate-fade-in-up delay-400">
             Coming to Bondi &bull; Summer 2026
           </p>
-        </div>
-      </section>
-
-      {/* ═══════ STATS BAR ═══════ */}
-      <section className="bg-contrast">
-        <div className="max-w-[1200px] mx-auto grid grid-cols-2 md:grid-cols-4">
-          <div className="p-8 md:p-12 text-center border-r border-b md:border-b-0 border-neutral-800">
-            <div className="font-display text-[clamp(36px,5vw,48px)] text-error uppercase leading-none mb-2">
-              2 in 3
-            </div>
-            <div className="font-body text-sm text-neutral-500">
-              Will get skin cancer
-            </div>
-          </div>
-          <div className="p-8 md:p-12 text-center border-b md:border-b-0 md:border-r border-neutral-800">
-            <div className="font-display text-[clamp(36px,5vw,48px)] text-accent uppercase leading-none mb-2">
-              86%
-            </div>
-            <div className="font-body text-sm text-neutral-500">
-              Don&apos;t reapply sunscreen
-            </div>
-          </div>
-          <div className="p-8 md:p-12 text-center border-r border-neutral-800">
-            <div className="font-display text-[clamp(36px,5vw,48px)] text-accent uppercase leading-none mb-2">
-              $5
-            </div>
-            <div className="font-body text-sm text-neutral-500">
-              Less than a flat white
-            </div>
-          </div>
-          <div className="p-8 md:p-12 text-center">
-            <div className="font-display text-[clamp(36px,5vw,48px)] text-success uppercase leading-none mb-2">
-              90%
-            </div>
-            <div className="font-body text-sm text-neutral-500">
-              Would use it
-            </div>
-          </div>
         </div>
       </section>
 
