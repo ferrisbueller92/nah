@@ -46,6 +46,9 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  other: {
+    "fb:app_id": "1411485070658883",
+  },
 };
 
 export default function RootLayout({
@@ -55,9 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-AU">
-      <head>
-        <meta property="fb:app_id" content="1411485070658883" />
-      </head>
+      <head></head>
       <body className="antialiased">{children}</body>
     </html>
   );
