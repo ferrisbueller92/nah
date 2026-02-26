@@ -87,6 +87,48 @@ body {
 .gradient-sunburst-subtle { background: var(--gradient-sunburst-subtle); }
 .gradient-scorcher { background: var(--gradient-scorcher); }
 
+/* ── Sunscreen Text Effects ── */
+/* Use on any text to get that thick, creamy, finger-drawn-in-sunscreen look */
+
+/* Base sunscreen text — thick white with slight translucency */
+.text-sunscreen {
+  font-family: var(--font-accent);
+  color: rgba(255, 255, 255, 0.85);
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.3),
+    0 0 8px rgba(255, 255, 255, 0.08);
+  -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.15);
+}
+
+/* Heavier application — looks like a thick smear */
+.text-sunscreen-thick {
+  font-family: var(--font-accent);
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow:
+    0 1px 3px rgba(255, 255, 255, 0.4),
+    0 0 12px rgba(255, 255, 255, 0.12),
+    1px 1px 0 rgba(255, 255, 255, 0.06);
+  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.2);
+}
+
+/* Light/faded — like sunscreen that's been rubbed in */
+.text-sunscreen-light {
+  font-family: var(--font-accent);
+  color: rgba(255, 255, 255, 0.55);
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.15);
+}
+
+/* Sunscreen on dark surface (for dark bg sections) */
+.text-sunscreen-dark {
+  font-family: var(--font-accent);
+  color: rgba(255, 248, 240, 0.88);
+  text-shadow:
+    0 1px 3px rgba(255, 248, 240, 0.3),
+    0 0 10px rgba(255, 248, 240, 0.08);
+  -webkit-text-stroke: 0.3px rgba(255, 248, 240, 0.12);
+}
+
 /* ── Animations ── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }

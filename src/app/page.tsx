@@ -209,6 +209,10 @@ export default function Home() {
                     : "YEAH, NAH \u2014 SIGN ME UP"}
                 </button>
               </form>
+              <p className="font-body text-[11px] text-white/40 mt-3 max-w-md mx-auto">
+                By signing up you agree to receive launch updates from NAH. No spam, unsubscribe anytime.{" "}
+                <a href="/privacy" className="underline hover:text-white/60">Privacy Policy</a>.
+              </p>
               {heroStatus === "error" && (
                 <p className="text-white text-sm mt-3 font-body">
                   {heroErrorMsg}
@@ -297,7 +301,7 @@ export default function Home() {
                 Walk Out
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                Quick dry. Full UV protection. Go enjoy the beach.
+                Quick dry. Broad-spectrum UV protection. Go enjoy the beach.
                 You&apos;re welcome.
               </p>
             </div>
@@ -409,6 +413,10 @@ export default function Home() {
                     : `VOTE FOR ${selectedBeachData?.name.toUpperCase()}`}
                 </button>
               </form>
+              <p className="font-body text-[11px] text-white/40 mt-3 max-w-md mx-auto">
+                By voting you agree to receive launch updates from NAH.{" "}
+                <a href="/privacy" className="underline hover:text-white/60">Privacy Policy</a>.
+              </p>
               {status === "error" && (
                 <p className="text-white text-sm mt-3 font-body">
                   {errorMsg}
@@ -511,11 +519,11 @@ export default function Home() {
                 Proper Protection
               </div>
               <h3 className="font-display text-[22px] uppercase mb-2">
-                SPF 50+ TGA-Listed
+                SPF 50+ Broad-Spectrum
               </h3>
               <p className="font-body text-[15px] text-neutral-600 leading-relaxed">
-                Same active ingredients as the stuff at Priceline. TGA-listed,
-                broad spectrum, made by an Australian contract lab. Not some
+                Broad-spectrum SPF 50+ formulation, designed to meet TGA
+                standards, made by an Australian contract lab. Not some
                 dodgy spray &mdash; proper sunscreen.
               </p>
             </div>
@@ -609,11 +617,10 @@ export default function Home() {
                 </span>
               </summary>
               <div className="px-6 pb-6 font-body text-[15px] text-neutral-600 leading-relaxed">
-                SPF 50+, TGA-listed, broad-spectrum sunscreen made by an
-                Australian contract lab. Same active ingredients as the stuff the
-                Cancer Council sells. Full ingredient list is displayed on the
-                booth screen before you spray, with a sensitive skin warning. We
-                just apply it better.
+                Broad-spectrum SPF 50+ sunscreen, designed to meet Australian
+                TGA standards, made by an Australian contract lab. Full
+                ingredient list will be displayed on the booth screen before you
+                spray, with a sensitive skin warning. We just apply it better.
               </div>
             </details>
 
@@ -725,6 +732,10 @@ export default function Home() {
                 : "YEAH, NAH \u2014 SIGN ME UP"}
             </button>
           </form>
+          <p className="font-body text-[11px] text-white/40 mt-3 max-w-md mx-auto">
+            By signing up you agree to receive launch updates from NAH.{" "}
+            <a href="/privacy" className="underline hover:text-white/60">Privacy Policy</a>.
+          </p>
           {heroStatus === "success" && (
             <p className="text-white/90 text-sm mt-3 font-body">
               Legend. We&apos;ll let you know when we launch.
@@ -746,10 +757,10 @@ export default function Home() {
             &mdash; That&apos;s what we&apos;re here for.
           </p>
           <p className="font-data text-[11px] text-neutral-700 uppercase tracking-[0.1em] mb-6">
-            SPF 50+ &bull; TGA Compliant &bull; Full Body &bull; Coming to
+            SPF 50+ &bull; Broad-Spectrum &bull; Full Body &bull; Coming to
             Sydney beaches
           </p>
-          <div className="flex justify-center gap-6 mb-6">
+          <div className="flex justify-center gap-6 mb-4">
             <a
               href="mailto:hello@getnah.com.au"
               className="font-body text-sm text-neutral-500 hover:text-accent transition-colors"
@@ -757,8 +768,22 @@ export default function Home() {
               hello@getnah.com.au
             </a>
           </div>
+          <div className="flex justify-center gap-4 mb-6">
+            <a href="/privacy" className="font-body text-[12px] text-neutral-600 hover:text-accent transition-colors">
+              Privacy Policy
+            </a>
+            <span className="text-neutral-700">&bull;</span>
+            <a href="/terms" className="font-body text-[12px] text-neutral-600 hover:text-accent transition-colors">
+              Terms of Use
+            </a>
+          </div>
+          <p className="font-body text-[11px] text-neutral-700 max-w-[60ch] mx-auto mb-4">
+            NAH is in development and not yet commercially available.
+            Sunscreen is only one form of sun protection &mdash; seek shade,
+            wear protective clothing, and avoid prolonged sun exposure.
+          </p>
           <p className="font-body text-[12px] text-neutral-700">
-            &copy; 2026 NAH. All rights reserved. ABN pending.
+            &copy; 2026 Need a Hand Sunscreen Pty Ltd | ACN 695 619 259
           </p>
         </div>
       </footer>
