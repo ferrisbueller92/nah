@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAH — Sunscreen Typography Sampler</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;600;700&family=Permanent+Marker&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --colour-base: #FFF8F0;
+      --colour-contrast: #1A1A1A;
+      --colour-accent: #FE8510;
+      --gradient-sunburst: linear-gradient(135deg, #F6C47D 0%, #FEA609 30%, #FE8510 65%, #F47800 100%);
+      --font-display: 'Anton', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-accent: 'Permanent Marker', cursive;
+      --font-data: 'Space Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background: #111;
+      color: white;
+    }
+
+    /* ── Section layouts ── */
+    .section {
+      padding: 60px 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .section-orange { background: var(--gradient-sunburst); }
+    .section-dark { background: var(--colour-contrast); }
+    .section-midnight { background: #0D1B2A; }
+    .section-base { background: var(--colour-base); color: var(--colour-contrast); }
+
+    .label {
+      font-family: var(--font-data);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      opacity: 0.5;
+      margin-bottom: 8px;
+    }
+    .section-base .label { color: var(--colour-contrast); }
+
+    .class-name {
+      font-family: var(--font-data);
+      font-size: 13px;
+      color: var(--colour-accent);
+      margin-bottom: 24px;
+      display: inline-block;
+      background: rgba(0,0,0,0.3);
+      padding: 4px 12px;
+      border-radius: 4px;
+    }
+    .section-base .class-name { background: rgba(0,0,0,0.08); }
+
+    .size-row {
+      margin-bottom: 16px;
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+    }
+    .size-label {
+      font-family: var(--font-data);
+      font-size: 10px;
+      opacity: 0.4;
+      min-width: 60px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .spacer { height: 40px; }
+
+    /* ══════════════════════════════════════════
+       SUNSCREEN TEXT EFFECTS
+       ══════════════════════════════════════════ */
+
+    /* Base sunscreen text — thick white with slight translucency */
+    .text-sunscreen {
+      font-family: var(--font-accent);
+      color: rgba(255, 255, 255, 0.85);
+      text-shadow:
+        0 1px 2px rgba(255, 255, 255, 0.3),
+        0 0 8px rgba(255, 255, 255, 0.08);
+      -webkit-text-stroke: 0.3px rgba(255, 255, 255, 0.15);
+    }
+
+    /* Heavier application — looks like a thick smear */
+    .text-sunscreen-thick {
+      font-family: var(--font-accent);
+      color: rgba(255, 255, 255, 0.92);
+      text-shadow:
+        0 1px 3px rgba(255, 255, 255, 0.4),
+        0 0 12px rgba(255, 255, 255, 0.12),
+        1px 1px 0 rgba(255, 255, 255, 0.06);
+      -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Light/faded — like sunscreen that's been rubbed in */
+    .text-sunscreen-light {
+      font-family: var(--font-accent);
+      color: rgba(255, 255, 255, 0.55);
+      text-shadow:
+        0 1px 2px rgba(255, 255, 255, 0.15);
+    }
+
+    /* Sunscreen on dark surface (for dark bg sections) */
+    .text-sunscreen-dark {
+      font-family: var(--font-accent);
+      color: rgba(255, 248, 240, 0.88);
+      text-shadow:
+        0 1px 3px rgba(255, 248, 240, 0.3),
+        0 0 10px rgba(255, 248, 240, 0.08);
+      -webkit-text-stroke: 0.3px rgba(255, 248, 240, 0.12);
+    }
+
+    /* ══════════════════════════════════════════
+       COMPARISON: PLAIN WHITE TEXT (no effect)
+       ══════════════════════════════════════════ */
+    .text-plain-accent {
+      font-family: var(--font-accent);
+      color: white;
+    }
+    .text-plain-accent-80 {
+      font-family: var(--font-accent);
+      color: rgba(255,255,255,0.8);
+    }
+
+    /* ══════════════════════════════════════════
+       ROTATION VARIANTS
+       ══════════════════════════════════════════ */
+    .rotate-neg1 { transform: rotate(-1deg); }
+    .rotate-neg2 { transform: rotate(-2deg); }
+    .rotate-neg3 { transform: rotate(-3deg); }
+    .rotate-pos1 { transform: rotate(1deg); }
+    .rotate-pos2 { transform: rotate(2deg); }
+
+    /* ══════════════════════════════════════════
+       HEADER
+       ══════════════════════════════════════════ */
+    .header {
+      background: #0a0a0a;
+      padding: 40px;
+      text-align: center;
+      border-bottom: 3px solid var(--colour-accent);
+    }
+    .header h1 {
+      font-family: var(--font-display);
+      font-size: 48px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .header h1 span { color: var(--colour-accent); }
+    .header p {
+      font-family: var(--font-data);
+      font-size: 13px;
+      opacity: 0.5;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Side-by-side comparison */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+    .compare-col { }
+    .compare-col h3 {
+      font-family: var(--font-data);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.5;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+
+    /* Context examples */
+    .context-example {
+      padding: 40px;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      margin-bottom: 16px;
+      border-radius: 8px;
+    }
+    .section-base .context-example {
+      border-color: rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1>NAH<span>.</span></h1>
+    <p>Sunscreen Typography Sampler &bull; Pick your effect</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 1. TEXT-SUNSCREEN (base) on Orange -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section section-orange">
+    <p class="label">On gradient-sunburst (orange)</p>
+    <span class="class-name">.text-sunscreen</span>
+    <p style="font-family:var(--font-body);font-size:13px;opacity:0.7;margin-bottom:24px;">
+      Standard creamy white with slight translucency + soft glow. Your go-to for most accent text.
+    </p>
+
+    <div class="size-row">
+      <span class="size-label">56px</span>
+      <span class="text-sunscreen" style="font-size:56px;line-height:1.1;">Mate, you're cooked.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">44px</span>
+      <span class="text-sunscreen" style="font-size:44px;line-height:1.1;">No spam. Just SPF.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">32px</span>
+      <span class="text-sunscreen" style="font-size:32px;line-height:1.2;">Your back will thank you.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">24px</span>
+      <span class="text-sunscreen" style="font-size:24px;line-height:1.3;">You've already got skin in the game.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">18px</span>
+      <span class="text-sunscreen" style="font-size:18px;line-height:1.4;">Tell your mates — the more interest, the sooner it happens.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">14px</span>
+      <span class="text-sunscreen" style="font-size:14px;line-height:1.5;">SPF 50+ &bull; TGA Compliant &bull; Full Body &bull; Coming to Sydney beaches</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 2. TEXT-SUNSCREEN-THICK on Orange -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section section-orange">
+    <p class="label">On gradient-sunburst (orange)</p>
+    <span class="class-name">.text-sunscreen-thick</span>
+    <p style="font-family:var(--font-body);font-size:13px;opacity:0.7;margin-bottom:24px;">
+      Heavier application — more opaque, stronger glow, thicker stroke. Like a proper glob of zinc.
+    </p>
+
+    <div class="size-row">
+      <span class="size-label">56px</span>
+      <span class="text-sunscreen-thick" style="font-size:56px;line-height:1.1;">Mate, you're cooked.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">44px</span>
+      <span class="text-sunscreen-thick" style="font-size:44px;line-height:1.1;">No spam. Just SPF.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">32px</span>
+      <span class="text-sunscreen-thick" style="font-size:32px;line-height:1.2;">Your back will thank you.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">24px</span>
+      <span class="text-sunscreen-thick" style="font-size:24px;line-height:1.3;">You've already got skin in the game.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">18px</span>
+      <span class="text-sunscreen-thick" style="font-size:18px;line-height:1.4;">Tell your mates — the more interest, the sooner it happens.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">14px</span>
+      <span class="text-sunscreen-thick" style="font-size:14px;line-height:1.5;">SPF 50+ &bull; TGA Compliant &bull; Full Body &bull; Coming to Sydney beaches</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 3. TEXT-SUNSCREEN-LIGHT on Orange -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section section-orange">
+    <p class="label">On gradient-sunburst (orange)</p>
+    <span class="class-name">.text-sunscreen-light</span>
+    <p style="font-family:var(--font-body);font-size:13px;opacity:0.7;margin-bottom:24px;">
+      Faded, rubbed-in look. Like sunscreen that's been applied and mostly absorbed into skin.
+    </p>
+
+    <div class="size-row">
+      <span class="size-label">56px</span>
+      <span class="text-sunscreen-light" style="font-size:56px;line-height:1.1;">Mate, you're cooked.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">44px</span>
+      <span class="text-sunscreen-light" style="font-size:44px;line-height:1.1;">No spam. Just SPF.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">32px</span>
+      <span class="text-sunscreen-light" style="font-size:32px;line-height:1.2;">Your back will thank you.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">24px</span>
+      <span class="text-sunscreen-light" style="font-size:24px;line-height:1.3;">You've already got skin in the game.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">18px</span>
+      <span class="text-sunscreen-light" style="font-size:18px;line-height:1.4;">Tell your mates — the more interest, the sooner it happens.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label">14px</span>
+      <span class="text-sunscreen-light" style="font-size:14px;line-height:1.5;">SPF 50+ &bull; TGA Compliant &bull; Full Body &bull; Coming to Sydney beaches</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 4. TEXT-SUNSCREEN-DARK on Dark bg -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section section-dark">
+    <p class="label">On contrast (dark / #1A1A1A)</p>
+    <span class="class-name">.text-sunscreen-dark</span>
+    <p style="font-family:var(--font-body);font-size:13px;opacity:0.7;margin-bottom:24px;">
+      Warm white on dark surface. Uses #FFF8F0 tint for warmth instead of pure white.
+    </p>
+
+    <div class="size-row">
+      <span class="size-label" style="color:rgba(255,255,255,0.4);">56px</span>
+      <span class="text-sunscreen-dark" style="font-size:56px;line-height:1.1;">Mate, you're cooked.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label" style="color:rgba(255,255,255,0.4);">44px</span>
+      <span class="text-sunscreen-dark" style="font-size:44px;line-height:1.1;">NAH fixes all three.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label" style="color:rgba(255,255,255,0.4);">32px</span>
+      <span class="text-sunscreen-dark" style="font-size:32px;line-height:1.2;">Your back will thank you.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label" style="color:rgba(255,255,255,0.4);">24px</span>
+      <span class="text-sunscreen-dark" style="font-size:24px;line-height:1.3;">You've already got skin in the game.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label" style="color:rgba(255,255,255,0.4);">18px</span>
+      <span class="text-sunscreen-dark" style="font-size:18px;line-height:1.4;">Tell your mates — the more interest, the sooner it happens.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label" style="color:rgba(255,255,255,0.4);">14px</span>
+      <span class="text-sunscreen-dark" style="font-size:14px;line-height:1.5;">SPF 50+ &bull; TGA Compliant &bull; Full Body &bull; Coming to Sydney beaches</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 5. TEXT-SUNSCREEN-DARK on Midnight -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section section-midnight">
+    <p class="label" style="color:rgba(255,255,255,0.4);">On midnight (#0D1B2A)</p>
+    <span class="class-name">.text-sunscreen-dark</span>
+    <p style="font-family:var(--font-body);font-size:13px;opacity:0.5;margin-bottom:24px;">
+      Same warm variant on deep blue-black. The glow effect is more visible here.
+    </p>
+
+    <div class="size-row">
+      <span class="size-label" style="color:rgba(255,255,255,0.3);">56px</span>
+      <span class="text-sunscreen-dark" style="font-size:56px;line-height:1.1;">NAH, not today melanoma.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label" style="color:rgba(255,255,255,0.3);">32px</span>
+      <span class="text-sunscreen-dark" style="font-size:32px;line-height:1.2;">Because your excuses ran out.</span>
+    </div>
+    <div class="size-row">
+      <span class="size-label" style="color:rgba(255,255,255,0.3);">20px</span>
+      <span class="text-sunscreen-dark" style="font-size:20px;line-height:1.4;">Legend. We'll let you know when we launch.</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 6. SIDE-BY-SIDE: Sunscreen vs Plain -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section section-orange">
+    <p class="label">Comparison — sunscreen effect vs plain white</p>
+    <span class="class-name">Side by side at each size</span>
+
+    <div class="compare-grid">
+      <div class="compare-col">
+        <h3>text-sunscreen</h3>
+        <div style="margin-bottom:20px;">
+          <span class="text-sunscreen" style="font-size:48px;line-height:1.1;">Mate, you're cooked.</span>
+        </div>
+        <div style="margin-bottom:20px;">
+          <span class="text-sunscreen" style="font-size:32px;line-height:1.2;">No spam. Just SPF.</span>
+        </div>
+        <div style="margin-bottom:20px;">
+          <span class="text-sunscreen" style="font-size:20px;line-height:1.3;">Your back will thank you.</span>
+        </div>
+        <div>
+          <span class="text-sunscreen" style="font-size:14px;line-height:1.5;">SPF 50+ &bull; Full Body</span>
+        </div>
+      </div>
+      <div class="compare-col">
+        <h3>Plain white (no effect)</h3>
+        <div style="margin-bottom:20px;">
+          <span class="text-plain-accent" style="font-size:48px;line-height:1.1;">Mate, you're cooked.</span>
+        </div>
+        <div style="margin-bottom:20px;">
+          <span class="text-plain-accent" style="font-size:32px;line-height:1.2;">No spam. Just SPF.</span>
+        </div>
+        <div style="margin-bottom:20px;">
+          <span class="text-plain-accent" style="font-size:20px;line-height:1.3;">Your back will thank you.</span>
+        </div>
+        <div>
+          <span class="text-plain-accent" style="font-size:14px;line-height:1.5;">SPF 50+ &bull; Full Body</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="compare-grid">
+      <div class="compare-col">
+        <h3>text-sunscreen-thick</h3>
+        <div style="margin-bottom:20px;">
+          <span class="text-sunscreen-thick" style="font-size:48px;line-height:1.1;">Mate, you're cooked.</span>
+        </div>
+        <div style="margin-bottom:20px;">
+          <span class="text-sunscreen-thick" style="font-size:32px;line-height:1.2;">No spam. Just SPF.</span>
+        </div>
+        <div style="margin-bottom:20px;">
+          <span class="text-sunscreen-thick" style="font-size:20px;line-height:1.3;">Your back will thank you.</span>
+        </div>
+      </div>
+      <div class="compare-col">
+        <h3>text-sunscreen-light</h3>
+        <div style="margin-bottom:20px;">
+          <span class="text-sunscreen-light" style="font-size:48px;line-height:1.1;">Mate, you're cooked.</span>
+        </div>
+        <div style="margin-bottom:20px;">
+          <span class="text-sunscreen-light" style="font-size:32px;line-height:1.2;">No spam. Just SPF.</span>
+        </div>
+        <div style="margin-bottom:20px;">
+          <span class="text-sunscreen-light" style="font-size:20px;line-height:1.3;">Your back will thank you.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 7. ROTATION VARIANTS -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section section-orange">
+    <p class="label">With rotation — the casual smear angle</p>
+    <span class="class-name">text-sunscreen + rotate</span>
+    <p style="font-family:var(--font-body);font-size:13px;opacity:0.7;margin-bottom:32px;">
+      The slight tilt sells the "drawn by hand" feel. -2deg is the sweet spot.
+    </p>
+
+    <div style="text-align:center;margin-bottom:24px;">
+      <span class="text-sunscreen" style="font-size:36px;display:inline-block;">No rotation (0&deg;)</span>
+    </div>
+    <div style="text-align:center;margin-bottom:24px;">
+      <span class="text-sunscreen rotate-neg1" style="font-size:36px;display:inline-block;">Slight tilt (-1&deg;)</span>
+    </div>
+    <div style="text-align:center;margin-bottom:24px;">
+      <span class="text-sunscreen rotate-neg2" style="font-size:36px;display:inline-block;">No spam. Just SPF. (-2&deg;)</span>
+    </div>
+    <div style="text-align:center;margin-bottom:24px;">
+      <span class="text-sunscreen rotate-neg3" style="font-size:36px;display:inline-block;">Getting wobbly (-3&deg;)</span>
+    </div>
+    <div style="text-align:center;margin-bottom:24px;">
+      <span class="text-sunscreen rotate-pos1" style="font-size:36px;display:inline-block;">Other direction (+1&deg;)</span>
+    </div>
+    <div style="text-align:center;">
+      <span class="text-sunscreen rotate-pos2" style="font-size:36px;display:inline-block;">Other direction (+2&deg;)</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 8. IN-CONTEXT EXAMPLES -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section section-orange">
+    <p class="label">In context — how they'd look on the actual page</p>
+    <span class="class-name">Real page sections, simulated</span>
+
+    <!-- Hero simulation -->
+    <div class="context-example" style="background:rgba(0,0,0,0.15);">
+      <div style="font-family:var(--font-display);font-size:80px;color:white;text-transform:uppercase;line-height:0.85;margin-bottom:16px;">
+        NAH<span style="color:var(--colour-accent);">.</span>
+      </div>
+      <div class="text-sunscreen" style="font-size:36px;margin-bottom:16px;">
+        Mate, you're cooked.
+      </div>
+      <div style="width:60px;height:4px;background:var(--colour-contrast);margin:0 auto 24px;"></div>
+      <p style="font-family:var(--font-body);font-size:15px;color:rgba(255,255,255,0.7);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:16px;">
+        <strong style="color:white;">N</strong>eed
+        <strong style="color:white;">A</strong>
+        <strong style="color:white;">H</strong>and?
+        &mdash; Automated sunscreen for Australian beaches
+      </p>
+      <p style="font-family:var(--font-body);font-size:17px;color:rgba(255,255,255,0.85);max-width:50ch;margin:0 auto 20px;line-height:1.5;">
+        A walk-in booth on the sand that sprays you head-to-toe with SPF 50+ in seconds. Tap, spray, done.
+      </p>
+      <div class="text-sunscreen rotate-neg2" style="font-size:20px;margin-bottom:40px;">
+        No spam. Just SPF.
+      </div>
+    </div>
+
+    <!-- Interstitial quote simulation -->
+    <div class="context-example" style="background:rgba(0,0,0,0.1);">
+      <p class="label" style="color:rgba(255,255,255,0.4);margin-bottom:16px;">Interstitial / pull quote</p>
+      <div class="text-sunscreen-thick rotate-neg1" style="font-size:40px;line-height:1.2;">
+        You've already got skin in the game.
+      </div>
+    </div>
+
+    <!-- Beach vote success -->
+    <div class="context-example" style="background:rgba(0,0,0,0.15);">
+      <p class="label" style="color:rgba(255,255,255,0.4);margin-bottom:16px;">After signup — success state</p>
+      <div class="text-sunscreen-thick" style="font-size:36px;margin-bottom:8px;">
+        Legend.
+      </div>
+      <p style="font-family:var(--font-body);font-size:15px;color:rgba(255,255,255,0.7);">
+        You're on the list. We'll let you know when NAH hits the sand.
+      </p>
+    </div>
+  </div>
+
+  <!-- Dark bg context -->
+  <div class="section section-dark">
+    <p class="label" style="color:rgba(255,255,255,0.4);">In context — dark sections</p>
+
+    <!-- Warning section simulation -->
+    <div class="context-example" style="background:rgba(255,255,255,0.03);">
+      <p class="label" style="color:rgba(255,255,255,0.3);margin-bottom:16px;">Warning section accent</p>
+      <div style="border:2px solid var(--colour-accent);padding:32px;position:relative;max-width:600px;margin:0 auto;">
+        <span style="position:absolute;top:-10px;left:20px;background:var(--colour-contrast);padding:0 12px;font-family:var(--font-display);font-size:13px;color:var(--colour-accent);text-transform:uppercase;letter-spacing:0.15em;">Warning</span>
+        <p style="font-family:var(--font-body);font-size:18px;color:rgba(255,248,240,0.8);line-height:1.6;margin-bottom:16px;">
+          18% of beachgoers have zero sunscreen. 86% don't reapply within 2 hours.
+        </p>
+        <div class="text-sunscreen-dark" style="font-size:28px;">
+          NAH fixes all three.
+        </div>
+      </div>
+    </div>
+
+    <!-- Final CTA headline -->
+    <div class="context-example" style="background:rgba(255,255,255,0.03);">
+      <p class="label" style="color:rgba(255,255,255,0.3);margin-bottom:16px;">Final CTA headline option</p>
+      <div class="text-sunscreen-dark" style="font-size:48px;line-height:1;">
+        NAH, not today melanoma.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- 9. ALL FOUR EFFECTS AT 32px SIDE BY SIDE -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="section section-orange">
+    <p class="label">Quick reference — all four at 32px on orange</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:16px;">
+      <div style="padding:24px;background:rgba(0,0,0,0.1);border-radius:8px;text-align:center;">
+        <p class="label" style="margin-bottom:12px;">.text-sunscreen</p>
+        <span class="text-sunscreen" style="font-size:32px;">Your back will thank you.</span>
+      </div>
+      <div style="padding:24px;background:rgba(0,0,0,0.1);border-radius:8px;text-align:center;">
+        <p class="label" style="margin-bottom:12px;">.text-sunscreen-thick</p>
+        <span class="text-sunscreen-thick" style="font-size:32px;">Your back will thank you.</span>
+      </div>
+      <div style="padding:24px;background:rgba(0,0,0,0.1);border-radius:8px;text-align:center;">
+        <p class="label" style="margin-bottom:12px;">.text-sunscreen-light</p>
+        <span class="text-sunscreen-light" style="font-size:32px;">Your back will thank you.</span>
+      </div>
+      <div style="padding:24px;background:rgba(0,0,0,0.1);border-radius:8px;text-align:center;">
+        <p class="label" style="margin-bottom:12px;">.text-plain-accent (no effect)</p>
+        <span class="text-plain-accent-80" style="font-size:32px;">Your back will thank you.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="padding:40px;text-align:center;background:#0a0a0a;">
+    <p style="font-family:var(--font-data);font-size:11px;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.1em;">
+      NAH Typography Sampler &bull; Delete this file when you're done
+    </p>
+  </div>
+
+</body>
+</html>
