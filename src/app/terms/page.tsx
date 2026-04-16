@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Terms of Use | NAH.",
-  description: "Terms and conditions for using the NAH website.",
+  description:
+    "Terms and conditions for using the NAH automated sunscreen booth website. Need a Hand Sunscreen Pty Ltd — Sydney, Australia.",
+  alternates: {
+    canonical: "https://getnah.com.au/terms",
+  },
 };
 
 export default function TermsOfUse() {
@@ -119,12 +123,18 @@ export default function TermsOfUse() {
           </section>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-neutral-200">
+        <div className="mt-16 pt-8 border-t border-neutral-200 flex justify-between">
           <a
             href="/"
             className="font-body text-[14px] text-accent hover:underline"
           >
             &larr; Back to NAH
+          </a>
+          <a
+            href="/privacy"
+            className="font-body text-[14px] text-accent hover:underline"
+          >
+            Privacy Policy &rarr;
           </a>
         </div>
       </div>

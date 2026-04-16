@@ -2,7 +2,11 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | NAH.",
-  description: "How NAH collects, uses, and protects your personal information.",
+  description:
+    "How NAH collects, uses, and protects your personal information. Need a Hand Sunscreen Pty Ltd — Australia's automated sunscreen booth.",
+  alternates: {
+    canonical: "https://getnah.com.au/privacy",
+  },
 };
 
 export default function PrivacyPolicy() {
@@ -175,12 +179,18 @@ export default function PrivacyPolicy() {
           </section>
         </div>
 
-        <div className="mt-16 pt-8 border-t border-neutral-200">
+        <div className="mt-16 pt-8 border-t border-neutral-200 flex justify-between">
           <a
             href="/"
             className="font-body text-[14px] text-accent hover:underline"
           >
             &larr; Back to NAH
+          </a>
+          <a
+            href="/terms"
+            className="font-body text-[14px] text-accent hover:underline"
+          >
+            Terms of Use &rarr;
           </a>
         </div>
       </div>

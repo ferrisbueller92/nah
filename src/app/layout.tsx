@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "NAH. — Automated Sunscreen Booth | Don't Be #3",
   description:
-    "Australia's first automated sunscreen booth. Full body SPF 50+ in 30 seconds. Coming to Sydney beaches. Join the waitlist.",
+    "Australia's first automated sunscreen booth. Full body SPF 50+ in 30 seconds for less than a coffee. Coming to Sydney beaches. Join the waitlist — be first to know when we launch.",
   keywords: [
     "sunscreen booth",
     "automated sunscreen",
@@ -63,7 +63,10 @@ const organizationSchema = {
   name: "Need a Hand Sunscreen Pty Ltd",
   alternateName: "NAH",
   url: "https://getnah.com.au",
-  logo: "https://getnah.com.au/og-image.png",
+  logo: {
+    "@type": "ImageObject",
+    url: "https://getnah.com.au/og-image.png",
+  },
   email: "hello@getnah.com.au",
   description:
     "Australia's first automated sunscreen booth. Full body SPF 50+ in 30 seconds at the beach.",
