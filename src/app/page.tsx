@@ -767,6 +767,14 @@ export default function Home() {
             >
               hello@getnah.com.au
             </a>
+            <a
+              href="https://www.instagram.com/nahsunscreen"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-body text-sm text-neutral-500 hover:text-accent transition-colors"
+            >
+              @nahsunscreen
+            </a>
           </div>
           <div className="flex justify-center gap-4 mb-6">
             <a href="/privacy" className="font-body text-[12px] text-neutral-600 hover:text-accent transition-colors">
