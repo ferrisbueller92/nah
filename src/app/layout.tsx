@@ -13,7 +13,13 @@ export const metadata: Metadata = {
     "sun protection",
     "Australia",
     "NAH sunscreen",
+    "sunscreen spray booth",
+    "automated sunscreen booth Sydney",
+    "beach sunscreen station",
   ],
+  alternates: {
+    canonical: "https://getnah.com.au",
+  },
   openGraph: {
     title: "NAH. — Mate, You're Cooked.",
     description:
@@ -51,6 +57,87 @@ export const metadata: Metadata = {
   },
 };
 
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Need a Hand Sunscreen Pty Ltd",
+  alternateName: "NAH",
+  url: "https://getnah.com.au",
+  logo: "https://getnah.com.au/og-image.png",
+  email: "hello@getnah.com.au",
+  description:
+    "Australia's first automated sunscreen booth. Full body SPF 50+ in 30 seconds at the beach.",
+  foundingDate: "2025",
+  areaServed: {
+    "@type": "Country",
+    name: "Australia",
+  },
+  sameAs: ["https://www.instagram.com/nahsunscreen"],
+};
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "How does it work?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Step into the booth. Tap your card. You get sprayed head-to-toe with SPF 50+ sunscreen in seconds. Quick dry. Walk out. That's literally it.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is the sunscreen safe?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Broad-spectrum SPF 50+ sunscreen, designed to meet Australian TGA standards, made by an Australian contract lab. Full ingredient list will be displayed on the booth screen before you spray, with a sensitive skin warning.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Is it sticky?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Dries quickly. It's a fine mist, not a cream. Way less sticky than the guilt of not wearing any.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What about my face and eyes?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Close your eyes, hold your breath. There's a face shield option if you prefer. Most people just close their eyes.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How much does it cost?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Less than a flat white. We're keeping it affordable because the goal is to help you stay protected, not to make you broke. Family pricing available too.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Will it ruin my clothes?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Nah, it dries quickly. We recommend applying in your swimmers before getting dressed.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I bring the family?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yeah. Family pricing covers up to 4 people, one at a time through the booth. No more wrestling sunscreen onto kids who'd rather be in the water. Seconds each, done.",
+      },
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -58,7 +145,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en-AU">
-      <head></head>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(faqSchema),
+          }}
+        />
+      </head>
       <body className="antialiased">{children}</body>
     </html>
   );
